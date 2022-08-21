@@ -1,1 +1,1 @@
-![Welcom to Micro guild](next-on-netlify.png)
+# Welcom to Micro guild
