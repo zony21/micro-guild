@@ -1,36 +1,101 @@
-import * as React from 'react';
-import { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react'
+import { useState } from 'react'
+import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import {
+  Dialog,
+  DialogActions,
+  IconButton,
+  ListItemText,
+  Modal,
+  DialogContent,
+  DialogTitle,
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  createTheme,
+  ThemeProvider
+} from '@mui/material'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import SendIcon from '@mui/icons-material/Send'
+import EmailIcon from '@mui/icons-material/Email'
+import GoogleIcon from '@mui/icons-material/Google'
+import { makeStyles } from '@material-ui/core/styles'
 import styles from "../styles/Auth.module.scss"
-import { auth, provider, storage } from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { updateUserProfile } from '../features/userSlice';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import EmailIcon from '@mui/icons-material/Email';
-import GoogleIcon from '@mui/icons-material/Google';
-import InfoIcon from '@mui/icons-material/Info';
-import { IconButton, ListItemText } from '@mui/material';
+import { auth, provider, storage } from '../firebase'
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  updateProfile
+} from 'firebase/auth'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { updateUserProfile } from '../features/userSlice'
 
 const theme = createTheme();
+
+function getModalStyle() {
+  const top = 50
+  const left = 50
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%,-${left}%)`
+  }
+}
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+  },
+  image: {
+    backgroundImage:
+      "url(https://images.unsplash.com/photo-1589793907316-f94025b46850?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=932&q=80)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  modal: {
+    outline: "none",
+    position: "absolute",
+    width: 400,
+    borderRadius: 10,
+    backgroundColor: "white",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(10),
+  },
+}));
+
 const Auth: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,17 +105,27 @@ const Auth: React.FC = () => {
       password: data.get('password'),
     });
   };
+  const classes = useStyles();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
-  const [isLogin, setIsLogin] = useState(true)
   const [openModal, setOpenModal] = React.useState(false)
   const [resetEmail, setResetEmail] = useState("")
   const [open, setOpen] = React.useState(false)
   const [avatardemoImage, setAvatardemoImage] = useState("")
   const [checked, setChecked] = React.useState([true, false]);
+
+  const sendResetEmail = async (e: React.MouseEvent<HTMLElement>) => {
+    await sendPasswordResetEmail(auth, resetEmail).then(() => {
+      setOpenModal(false)
+      setResetEmail("")
+    }).catch((err) => {
+      alert(err.massage)
+      setResetEmail("")
+    })
+  }
 
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked]);
@@ -101,15 +176,20 @@ const Auth: React.FC = () => {
 
     if (authUser.user) {
       await updateProfile(authUser.user, {
-        displayName: username,
         photoURL: url,
       });
     }
 
     dispatch(
       updateUserProfile({
-        displayName: username,
         photoUrl: url,
+        displayName: '',
+        company: '',
+        tel: '',
+        postcode: '',
+        add1: '',
+        add2: '',
+        add3: ''
       })
     );
   };
@@ -159,6 +239,7 @@ const Auth: React.FC = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }}
             />
             <Button
+              disabled={!email || password.length < 6}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -256,6 +337,7 @@ const Auth: React.FC = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) }}
             />
             <TextField
+              helperText="半角英小文字・大文字・数字・記号を組合せて6字以上で入力してください。"
               margin="normal"
               required
               fullWidth
@@ -284,7 +366,7 @@ const Auth: React.FC = () => {
           <DialogActions>
             <Button variant="outlined" color="error" onClick={handleClose}>キャンセル</Button>
             <Button
-              disabled={!email || password.length < 6 || !avatarImage || !checked}
+              disabled={!email || password.length < 6 || !avatarImage || !checked[0] || !email.match(/.+@.+\..+/)}
               variant="contained"
               onClick={
                 async () => {
@@ -300,6 +382,28 @@ const Auth: React.FC = () => {
           </DialogActions>
         </Dialog>
         {/* アカウント登録ポップアップ */}
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+          <div style={getModalStyle()} className={classes.modal}>
+            <div className={styles.login_modal}>
+              <TextField
+                InputLabelProps={{
+                  shrink: true
+                }}
+                type="email"
+                name="email"
+                label="登録時Eメールアドレス"
+                value={resetEmail}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setResetEmail(e.target.value)
+                }}
+              >
+              </TextField>
+              <IconButton onClick={sendResetEmail}>
+                <SendIcon />
+              </IconButton>
+            </div>
+          </div>
+        </Modal>
       </Container>
     </ThemeProvider>
   );

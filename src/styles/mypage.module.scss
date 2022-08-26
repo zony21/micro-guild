@@ -1,0 +1,25 @@
+
+.mypage_continar {
+    display: flex;
+    justify-content: center;
+    nav {
+        max-width: 300px;
+        width: 30%;
+        padding: 10px;
+        ul{
+            background: #ffffff;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+    }
+    main {
+        max-width: calc(100% - 300px);
+        width: 70%;
+        padding: 10px;
+        .main_in{
+            background: #ffffff;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            padding: 10px 20px;
+            height: 100%;
+        }
+    }
+}
