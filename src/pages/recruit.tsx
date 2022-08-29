@@ -1,17 +1,19 @@
 import { collection, doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from 'firebase/auth'
 import Head from 'next/head'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Auth from '../components/Auth'
 import Mypage from '../components/Mypage'
 import { login, logout, selectUser } from '../features/userSlice'
 import { auth, db } from '../firebase'
+import FadeLoader from "react-spinners/ClipLoader";
 
 
 const Recruit = () => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
@@ -21,8 +23,9 @@ const Recruit = () => {
           dispatch(login({
             uid: authUser.uid,
             photoUrl: authUser.photoURL,
-            displayName: authUser.displayName,
+            displayName: docSnap.data().displayName,
             company: docSnap.data().company,
+            hpurl: docSnap.data().hpurl,
             tel: docSnap.data().tel,
             postcode: docSnap.data().postcode,
             add1: docSnap.data().add1,
@@ -33,7 +36,8 @@ const Recruit = () => {
           dispatch(login({
             uid: authUser.uid,
             photoUrl: authUser.photoURL,
-            displayName: authUser.displayName,
+            displayName: "",
+            hpurl: "",
             company: "",
             tel: "",
             postcode: "",
@@ -45,6 +49,7 @@ const Recruit = () => {
       } else {
         dispatch(logout())
       }
+      setLoading(false);
     })
     return () => {
       unSub()
@@ -55,8 +60,14 @@ const Recruit = () => {
       <Head>
         <title>{`${user.uid ? ("Mypage") : ("ログイン")} | Micro Guild`}</title>
       </Head>
-      {
+      {!loading ?
         user.uid ? (<Mypage />) : (<Auth />)
+        :
+        (
+          <div className="loader_wrap">
+            <FadeLoader color="#db8c6c"/>
+          </div>
+        )
       }
     </>
   )

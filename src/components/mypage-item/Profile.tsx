@@ -6,12 +6,23 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
 import { auth, db } from '../../firebase'
-
+import { styled } from '@mui/material/styles';
+const ValidationTextField = styled(TextField)({
+    '& input:invalid + fieldset': {
+        borderColor: 'red',
+        borderWidth: 2,
+    },
+    '&:hover fieldset': {
+        borderColor: 'yellow',
+    },
+});
 const Profile: React.FC = () => {
     const user = useSelector(selectUser)
+    const [profdisplayName, setProfdisplayName] = useState("")
     const [profcompany, setProfCompany] = useState("")
     const [proftel, setProfTel] = useState("")
     const [profpostcode, setProfPostcode] = useState("")
+    const [profurl, setProfUrl] = useState("")
     const [profadd1, setProfAdd1] = useState("")
     const [profadd2, setProfAdd2] = useState("")
     const [profadd3, setProfAdd3] = useState("")
@@ -24,6 +35,8 @@ const Profile: React.FC = () => {
             const docSnap = await getDoc(docRef);
             if (!docSnap.exists()) {
                 await setDoc((docRef), {
+                    displayName: profdisplayName,
+                    hpurl: profurl,
                     company: profcompany,
                     tel: proftel,
                     postcode: profpostcode,
@@ -33,6 +46,8 @@ const Profile: React.FC = () => {
                 })
             } else {
                 await updateDoc((docRef), {
+                    displayName: profdisplayName,
+                    hpurl: profurl,
                     company: profcompany,
                     tel: proftel,
                     postcode: profpostcode,
@@ -47,6 +62,8 @@ const Profile: React.FC = () => {
         }
     }
     useEffect(() => {
+        setProfdisplayName(user.displayName)
+        setProfUrl(user.hpurl)
         setProfCompany(user.company)
         setProfTel(user.tel)
         setProfPostcode(user.postcode)
@@ -54,11 +71,12 @@ const Profile: React.FC = () => {
         setProfAdd2(user.add2)
         setProfAdd3(user.add3)
     }, [])
+    console.log(profurl)
     return (
         <>
             <Box component="form" onSubmit={onProfCreate}>
                 <Box className="input_box">
-                    <TextField
+                    <ValidationTextField
                         margin="normal"
                         defaultValue={user.company}
                         required
@@ -72,6 +90,28 @@ const Profile: React.FC = () => {
                     />
                     <TextField
                         margin="normal"
+                        defaultValue={user.displayName}
+                        fullWidth
+                        id="displayName"
+                        label="担当者名"
+                        name="displayName"
+                        autoComplete="displayName"
+                        autoFocus
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfdisplayName(e.target.value) }}
+                    />
+                    <TextField
+                        margin="normal"
+                        defaultValue={user.hpurl}
+                        fullWidth
+                        id="hpurl"
+                        label="会社ホームページ"
+                        name="hpurl"
+                        autoComplete="hpurl"
+                        autoFocus
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfUrl(e.target.value) }}
+                    />
+                    <ValidationTextField
+                        margin="normal"
                         required
                         fullWidth
                         id="tel"
@@ -82,7 +122,7 @@ const Profile: React.FC = () => {
                         defaultValue={user.tel}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfTel(e.target.value) }}
                     />
-                    <TextField
+                    <ValidationTextField
                         margin="normal"
                         required
                         fullWidth
@@ -94,7 +134,7 @@ const Profile: React.FC = () => {
                         defaultValue={user.postcode}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfPostcode(e.target.value) }}
                     />
-                    <TextField
+                    <ValidationTextField
                         margin="normal"
                         required
                         fullWidth
@@ -106,7 +146,7 @@ const Profile: React.FC = () => {
                         defaultValue={user.add1}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfAdd1(e.target.value) }}
                     />
-                    <TextField
+                    <ValidationTextField
                         margin="normal"
                         required
                         fullWidth
@@ -118,7 +158,7 @@ const Profile: React.FC = () => {
                         autoFocus
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfAdd2(e.target.value) }}
                     />
-                    <TextField
+                    <ValidationTextField
                         margin="normal"
                         required
                         fullWidth

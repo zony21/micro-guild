@@ -5,7 +5,7 @@ body {
     position: relative;
     font-family: "Noto Sans JP", sans-serif;
     transition: 0.6s;
-    background: #e7ebf0;
+    background: #ffffff;
 }
 .body_open {
     opacity: 1 !important;
@@ -124,4 +124,15 @@ h3.com_h3 {
 
 .input_box{
     margin: 0 0 30px;
+}
+
+.loader_wrap{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

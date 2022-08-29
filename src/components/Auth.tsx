@@ -100,16 +100,11 @@ const Auth: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
   const classes = useStyles();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [username, setUsername] = useState("")
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [openModal, setOpenModal] = React.useState(false)
   const [resetEmail, setResetEmail] = useState("")
@@ -137,7 +132,6 @@ const Auth: React.FC = () => {
       const file = e.target.files[0]
       const reader = new FileReader()
       reader.onload = (e: any) => {
-        console.log(e.target.result)
         setAvatardemoImage(e.target.result)
       }
       reader.readAsDataURL(file)
@@ -184,6 +178,7 @@ const Auth: React.FC = () => {
       updateUserProfile({
         photoUrl: url,
         displayName: '',
+        hpurl: '',
         company: '',
         tel: '',
         postcode: '',
