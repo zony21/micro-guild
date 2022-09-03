@@ -1,15 +1,18 @@
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React from 'react'
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
 
-const SidebarOption = ({ text, Icon, active }) => {
+const SidebarOption = (props) => {
+    const router = useRouter();
+    const [activeclass, setActiveclass] = useState("")
     return (
         <>
             <ListItem disablePadding>
-                <ListItemButton>
+                <ListItemButton component="a" href={`./${props.slug}`}>
                     <ListItemIcon>
-                        <Icon />
+                        <props.Icon />
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText primary={props.text} />
                 </ListItemButton>
             </ListItem>
         </>

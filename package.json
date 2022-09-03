@@ -21,8 +21,13 @@
     "react-dom": "^18.1.0",
     "react-loader-spinner": "^5.3.3",
     "react-redux": "^7.2.0",
+    "react-router": "^6.3.0",
     "react-spinners": "^0.13.4",
+    "react-tabs": "^5.1.0",
     "recharts": "^2.1.13",
+    "redux-localstorage": "^0.4.1",
+    "redux-localstorage-filter": "^0.1.1",
+    "redux-localstorage-simple": "^2.5.1",
     "sass": "^1.54.5"
   },
   "devDependencies": {

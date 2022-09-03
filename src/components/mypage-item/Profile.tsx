@@ -71,7 +71,6 @@ const Profile: React.FC = () => {
         setProfAdd2(user.add2)
         setProfAdd3(user.add3)
     }, [])
-    console.log(profurl)
     return (
         <>
             <Box component="form" onSubmit={onProfCreate}>
