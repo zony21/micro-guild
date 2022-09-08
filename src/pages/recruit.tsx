@@ -8,6 +8,7 @@ import Mypage from '../components/Mypage'
 import { login, logout, selectUser } from '../features/userSlice'
 import { auth, db } from '../firebase'
 import FadeLoader from "react-spinners/ClipLoader";
+import Layout from "../components/Layout";
 
 
 const Recruit = () => {
@@ -56,7 +57,7 @@ const Recruit = () => {
     }
   }, [dispatch])
   return (
-    <>
+    <Layout>
       <Head>
         <title>{`${user.uid ? ("Mypage") : ("ログイン")} | Micro Guild`}</title>
       </Head>
@@ -69,7 +70,7 @@ const Recruit = () => {
           </div>
         )
       }
-    </>
+    </Layout>
   )
 }
 

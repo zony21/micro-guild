@@ -8,10 +8,10 @@ const Main = (props) => {
         <main>
             <div className={styles.main_in}>
                 {
-                    props.page === "/home" ? <Home /> : ""
+                    props.page === "/mypage/home" ? <Home /> : ""
                 }
                 {
-                    props.page === "/profile" ? <Profile /> : ""
+                    props.page === "/mypage/profile" ? <Profile /> : ""
                 }
             </div>
         </main>

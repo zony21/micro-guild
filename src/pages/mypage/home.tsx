@@ -3,12 +3,13 @@ import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FadeLoader from "react-spinners/ClipLoader";
-import Auth from '../components/Auth'
-import Mypage from '../components/Mypage'
-import { login, logout, selectUser } from '../features/userSlice'
-import { auth, db } from '../firebase'
+import Auth from '../../components/Auth'
+import Mypage from '../../components/Mypage'
+import { login, logout, selectUser } from '../../features/userSlice'
+import Layout from "../../components/Layout";
+import { auth, db } from '../../firebase'
 
-const Profile = () => {
+const Home = () => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -54,18 +55,18 @@ const Profile = () => {
     }
   }, [dispatch])
   return (
-    <>
+    <Layout>
       {!loading ?
         user.uid ? (<Mypage />) : (<Auth />)
         :
         (
           <div className="loader_wrap">
-            <FadeLoader color="#db8c6c"/>
+            <FadeLoader color="#db8c6c" />
           </div>
         )
       }
-    </>
+    </Layout>
   )
 }
 
-export default Profile
+export default Home
