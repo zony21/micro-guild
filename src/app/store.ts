@@ -6,7 +6,10 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
   },
-  preloadedState: load(),
+  preloadedState: (() => {
+    if (typeof localStorage === 'undefined') return
+    return load() as any
+  })(),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(save()),
 });
 
