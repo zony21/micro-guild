@@ -6,6 +6,10 @@ body {
     font-family: "Noto Sans JP", sans-serif;
     transition: 0.6s;
     background: #ffffff;
+    color: #2d2d2d;
+    padding: 67px 0 0;
+    --main-color: #db8c6c;
+    --main-background: #faf9f8;
 }
 .body_open {
     opacity: 1 !important;
@@ -53,11 +57,12 @@ h2,
 h3,
 h4,
 h5,
-nav {
+nav,
+body,
+header {
     box-sizing: border-box;
 }
 main {
-    padding: 130px 0;
 }
 .txt {
     line-height: 180%;
@@ -79,6 +84,11 @@ input[type="button"] {
     &::focus {
         outline-offset: -2px;
     }
+}
+button {
+    padding: 0;
+    border: none;
+    background: none;
 }
 // レスポンシブnone
 @media only screen and (max-width: 1366px) {
@@ -106,27 +116,33 @@ input[type="button"] {
         display: none !important;
     }
 }
+.logo{
+    font-size: 20px;
+    letter-spacing: 0.1em;
+}
 /*****************************************
-   h2.com_h2
-   ****************************************/
-h2.com_h2 {
+   h2
+****************************************/
+h2 {
+    margin: 0 0 50px;
 }
 /*****************************************
    h3.com_h3
-   ****************************************/
-h3.com_h3 {
+****************************************/
+h3 {
+    margin: 0 0 30px;
 }
 /*****************************************
    .bt
-   ****************************************/
+****************************************/
 .bt {
 }
 
-.input_box{
+.input_box {
     margin: 0 0 30px;
 }
 
-.loader_wrap{
+.loader_wrap {
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -135,4 +151,9 @@ h3.com_h3 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+/*****************************************
+   ログアウト
+****************************************/
+.logout {
 }

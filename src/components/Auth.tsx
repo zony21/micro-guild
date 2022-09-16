@@ -177,6 +177,7 @@ const Auth: React.FC = () => {
     dispatch(
       updateUserProfile({
         photoUrl: url,
+        email: email,
         displayName: '',
         hpurl: '',
         company: '',

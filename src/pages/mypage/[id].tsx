@@ -1,17 +1,15 @@
-import { collection, doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from 'firebase/auth'
-import Head from 'next/head'
+import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Auth from '../components/Auth'
-import Mypage from '../components/Mypage'
-import { login, logout, selectUser } from '../features/userSlice'
-import { auth, db } from '../firebase'
 import FadeLoader from "react-spinners/ClipLoader";
-import Layout from "../components/Layout";
+import Auth from '../../components/Auth'
+import Mypage from '../../components/Mypage'
+import { login, logout, selectUser } from '../../features/userSlice'
+import Layout from "../../components/Layout";
+import { auth, db } from '../../firebase'
 
-
-const Recruit = () => {
+const Mypages = () => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -23,6 +21,7 @@ const Recruit = () => {
         if (docSnap.exists()) {
           dispatch(login({
             uid: authUser.uid,
+            email: authUser.email,
             photoUrl: authUser.photoURL,
             displayName: docSnap.data().displayName,
             company: docSnap.data().company,
@@ -37,6 +36,7 @@ const Recruit = () => {
           dispatch(login({
             uid: authUser.uid,
             photoUrl: authUser.photoURL,
+            email: authUser.email,
             displayName: "",
             hpurl: "",
             company: "",
@@ -58,15 +58,12 @@ const Recruit = () => {
   }, [dispatch])
   return (
     <Layout>
-      <Head>
-        <title>{`${user.uid ? ("Mypage") : ("ログイン")} | Micro Guild`}</title>
-      </Head>
       {!loading ?
         user.uid ? (<Mypage />) : (<Auth />)
         :
         (
           <div className="loader_wrap">
-            <FadeLoader color="#db8c6c"/>
+            <FadeLoader color="#db8c6c" />
           </div>
         )
       }
@@ -74,4 +71,4 @@ const Recruit = () => {
   )
 }
 
-export default Recruit
+export default Mypages

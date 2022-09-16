@@ -1,0 +1,21 @@
+ul.ac_list {
+    max-width: 600px;
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 0;
+        border-bottom: 1px solid #e6e6e6;
+        &:first-child{
+            border-top: 1px solid #e6e6e6;
+        }
+        .tl {
+            h3 {
+                margin: 0;
+            }
+            span {
+                display: block;
+            }
+        }
+    }
+}

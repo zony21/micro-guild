@@ -1,7 +1,12 @@
 .com_hed{
-    background: #db8c6c;
+    background: var(--main-color);
     display: flex;
     justify-content: space-between;
     color: #ffffff;
     padding: 20px;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
 }
