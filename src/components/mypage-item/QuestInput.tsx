@@ -1,6 +1,6 @@
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextareaAutosize, TextField, Stack, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material'
 import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
 import { db } from '../../firebase'
@@ -29,7 +29,6 @@ const QuestInput: React.FC = () => {
     const [rlimit, setRlimit] = useState<Dayjs | null | string>(
         limitdays
     );
-    const [rurl, setRurl] = useState("")
     const [recruit, setRecruit] = useState("")
     const [remail, setRemail] = useState("")
     const [remailtxt, setRemailtxt] = useState("")
@@ -43,6 +42,13 @@ const QuestInput: React.FC = () => {
     const handleClickOpen = () => {
         setOpen(true);
     };
+    useEffect(() => {
+        setPostcode(user.postcode)
+        setAdd1(user.add1)
+        setAdd2(user.add2)
+        setAdd3(user.add3)
+        setRemail(user.email)
+    }, [])
     const sendQuest = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const adddocRef = addDoc(collection(db, "posts"), {
@@ -58,11 +64,12 @@ const QuestInput: React.FC = () => {
             salarymax: salarymax,
             workingstatus: workingstatus,
             rlimit: rlimit,
-            rurl: rurl,
+            recruit: recruit,
             remail: remail,
             remailtxt: remailtxt,
             timestamp: serverTimestamp(),
             username: user.displayName,
+            userid: user.uid,
         }).then(function (docQuest) {
             const docRef = doc(db, "users", user.uid, "myposts", docQuest.id);
             setDoc((docRef), {
@@ -71,18 +78,17 @@ const QuestInput: React.FC = () => {
         })
         setTitle("")
         setText("")
-        setPostcode("")
-        setAdd1("")
-        setAdd2("")
-        setAdd3("")
+        setPostcode(user.postcode)
+        setAdd1(user.add1)
+        setAdd2(user.add2)
+        setAdd3(user.add3)
         setJobname("")
         setSalarytype("")
         setSalarymin("")
         setSalarymax("")
         setWorkingstatus("")
-        setRlimit(null)
-        setRurl("")
-        setRemail("")
+        setRlimit(limitdays)
+        setRemail(user.email)
         setRemailtxt("")
     }
 
@@ -92,7 +98,7 @@ const QuestInput: React.FC = () => {
                 <button
                     onClick={() => handleClickOpen()}
                 >
-                    <AddIcon sx={{ fontSize: 60, color: "#ffffff" }} />
+                    <AddIcon sx={{ color: "#ffffff" }} />
                 </button>
             </div>
             <Dialog open={open} onClose={handleClose} fullWidth>
@@ -101,7 +107,9 @@ const QuestInput: React.FC = () => {
                     <DialogContent>
                         <Stack spacing={2}>
                             <TextField
-                                margin="normal" required
+                                margin="normal"
+                                value={title}
+                                required
                                 fullWidth
                                 id="title"
                                 label="タイトル"
@@ -111,7 +119,9 @@ const QuestInput: React.FC = () => {
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setTitle(e.target.value) }}
                             />
                             <TextField
-                                margin="normal" variant="outlined"
+                                margin="normal"
+                                variant="outlined"
+                                value={text}
                                 required
                                 fullWidth
                                 multiline
@@ -125,7 +135,7 @@ const QuestInput: React.FC = () => {
                             />
                             <TextField
                                 margin="normal"
-                                defaultValue={user.postcode}
+                                value={postcode}
                                 fullWidth
                                 id="postcode"
                                 label="郵便番号"
@@ -135,7 +145,7 @@ const QuestInput: React.FC = () => {
                             />
                             <TextField
                                 margin="normal"
-                                defaultValue={user.add1}
+                                value={add1}
                                 fullWidth
                                 id="add1"
                                 label="都道府県"
@@ -145,7 +155,7 @@ const QuestInput: React.FC = () => {
                             />
                             <TextField
                                 margin="normal"
-                                defaultValue={user.add2}
+                                value={add2}
                                 fullWidth
                                 id="add2"
                                 label="勤務地住所（市区）"
@@ -155,7 +165,7 @@ const QuestInput: React.FC = () => {
                             />
                             <TextField
                                 margin="normal"
-                                defaultValue={user.add3}
+                                value={add3}
                                 fullWidth
                                 id="add3"
                                 label="勤務地住所（詳細）"
@@ -165,6 +175,7 @@ const QuestInput: React.FC = () => {
                             />
                             <TextField
                                 margin="normal"
+                                value={jobname}
                                 fullWidth
                                 id="jobname"
                                 label="職種名"
@@ -181,16 +192,17 @@ const QuestInput: React.FC = () => {
                                     value={salarytype || ''}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setSalarytype(e.target.value) }}
                                 >
-                                    <MenuItem value={0}>選択してください</MenuItem>
-                                    <MenuItem value={1}>時給</MenuItem>
-                                    <MenuItem value={2}>日給</MenuItem>
-                                    <MenuItem value={3}>週休</MenuItem>
-                                    <MenuItem value={4}>月給</MenuItem>
-                                    <MenuItem value={5}>年収</MenuItem>
+                                    <MenuItem value={""}>選択してください</MenuItem>
+                                    <MenuItem value={"時給"}>時給</MenuItem>
+                                    <MenuItem value={"日給"}>日給</MenuItem>
+                                    <MenuItem value={"週休"}>週休</MenuItem>
+                                    <MenuItem value={"月給"}>月給</MenuItem>
+                                    <MenuItem value={"年収"}>年収</MenuItem>
                                 </Select>
                             </FormControl>
                             <TextField
                                 margin="normal"
+                                value={salarymin}
                                 fullWidth
                                 id="salarymin"
                                 label="給与下限"
@@ -201,6 +213,7 @@ const QuestInput: React.FC = () => {
                             <TextField
                                 margin="normal"
                                 fullWidth
+                                value={salarymax}
                                 id="salarymax"
                                 label="給与上限"
                                 name="salarymax"
@@ -216,15 +229,15 @@ const QuestInput: React.FC = () => {
                                     value={workingstatus || ''}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setWorkingstatus(e.target.value) }}
                                 >
-                                    <MenuItem value={0}>選択してください</MenuItem>
-                                    <MenuItem value={1}>正社員</MenuItem>
-                                    <MenuItem value={2}>パート・アルバイト</MenuItem>
-                                    <MenuItem value={3}>契約社員</MenuItem>
-                                    <MenuItem value={4}>派遣社員</MenuItem>
-                                    <MenuItem value={5}>インターンシップ</MenuItem>
-                                    <MenuItem value={6}>ボランティア</MenuItem>
-                                    <MenuItem value={7}>日雇い</MenuItem>
-                                    <MenuItem value={8}>その他</MenuItem>
+                                    <MenuItem value={""}>選択してください</MenuItem>
+                                    <MenuItem value={"正社員"}>正社員</MenuItem>
+                                    <MenuItem value={"パート・アルバイト"}>パート・アルバイト</MenuItem>
+                                    <MenuItem value={"契約社員"}>契約社員</MenuItem>
+                                    <MenuItem value={"派遣社員"}>派遣社員</MenuItem>
+                                    <MenuItem value={"インターンシップ"}>インターンシップ</MenuItem>
+                                    <MenuItem value={"ボランティア"}>ボランティア</MenuItem>
+                                    <MenuItem value={"日雇い"}>日雇い</MenuItem>
+                                    <MenuItem value={"その他"}>その他</MenuItem>
                                 </Select>
                             </FormControl>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -239,19 +252,42 @@ const QuestInput: React.FC = () => {
                             <TextField
                                 margin="normal"
                                 fullWidth
+                                value={recruit}
                                 id="recruit"
                                 label="応募フォームURL"
                                 name="recruit"
                                 autoComplete="recruit"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRecruit(e.target.value) }}
                             />
+                            <TextField
+                                margin="normal"
+                                fullWidth
+                                id="remail"
+                                value={remail}
+                                label="応募用メールアドレス"
+                                name="remail"
+                                autoComplete="remail"
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRemail(e.target.value) }}
+                            />
+                            <TextField
+                                margin="normal"
+                                variant="outlined"
+                                fullWidth
+                                value={remailtxt}
+                                multiline
+                                name="remailtxt"
+                                label="応募メールアドレス注意文"
+                                type="remailtxt"
+                                id="remailtxt"
+                                rows={10}
+                                autoComplete="current-password"
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRemailtxt(e.target.value) }}
+                            />
+                            <Button onClick={handleClose} fullWidth variant="contained" type='submit' disabled={!title || !title || !remail || !remail.match(/.+@.+\..+/)}>
+                                投稿
+                            </Button>
                         </Stack>
                     </DialogContent>
-                    <DialogActions>
-                        <Button type='submit'>
-                            投稿
-                        </Button>
-                    </DialogActions>
                 </Box>
             </Dialog>
         </>

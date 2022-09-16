@@ -16,7 +16,7 @@ const ValidationTextField = styled(TextField)({
         borderColor: 'yellow',
     },
 });
-const Profile: React.FC = () => {
+const Profile: React.FC = (props) => {
     const user = useSelector(selectUser)
     const [profdisplayName, setProfdisplayName] = useState("")
     const [profcompany, setProfCompany] = useState("")
@@ -30,35 +30,38 @@ const Profile: React.FC = () => {
         if (user.company && user.tel && user.postcode && user.add1 && user.add2 && user.add3) {
             event.preventDefault();
         }
-        const unSub = onAuthStateChanged(auth, async (authUser) => {
-            const docRef = doc(db, "users", authUser.uid);
-            const docSnap = await getDoc(docRef);
-            if (!docSnap.exists()) {
-                await setDoc((docRef), {
-                    displayName: profdisplayName,
-                    hpurl: profurl,
-                    company: profcompany,
-                    tel: proftel,
-                    postcode: profpostcode,
-                    add1: profadd1,
-                    add2: profadd2,
-                    add3: profadd3,
-                })
-            } else {
-                await updateDoc((docRef), {
-                    displayName: profdisplayName,
-                    hpurl: profurl,
-                    company: profcompany,
-                    tel: proftel,
-                    postcode: profpostcode,
-                    add1: profadd1,
-                    add2: profadd2,
-                    add3: profadd3,
-                })
+        var result = confirm('更新しますか？');
+        if (result) {
+            const unSub = onAuthStateChanged(auth, async (authUser) => {
+                const docRef = doc(db, "users", authUser.uid);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) {
+                    await setDoc((docRef), {
+                        displayName: profdisplayName,
+                        hpurl: profurl,
+                        company: profcompany,
+                        tel: proftel,
+                        postcode: profpostcode,
+                        add1: profadd1,
+                        add2: profadd2,
+                        add3: profadd3,
+                    })
+                } else {
+                    await updateDoc((docRef), {
+                        displayName: profdisplayName,
+                        hpurl: profurl,
+                        company: profcompany,
+                        tel: proftel,
+                        postcode: profpostcode,
+                        add1: profadd1,
+                        add2: profadd2,
+                        add3: profadd3,
+                    })
+                }
+            })
+            return () => {
+                unSub()
             }
-        })
-        return () => {
-            unSub()
         }
     }
     useEffect(() => {
@@ -84,7 +87,7 @@ const Profile: React.FC = () => {
                         label="会社名"
                         name="company"
                         autoComplete="company"
-                        autoFocus
+                        
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfCompany(e.target.value) }}
                     />
                     <TextField
@@ -95,7 +98,7 @@ const Profile: React.FC = () => {
                         label="担当者名"
                         name="displayName"
                         autoComplete="displayName"
-                        autoFocus
+                        
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfdisplayName(e.target.value) }}
                     />
                     <TextField
@@ -106,7 +109,7 @@ const Profile: React.FC = () => {
                         label="会社ホームページ"
                         name="hpurl"
                         autoComplete="hpurl"
-                        autoFocus
+                        
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfUrl(e.target.value) }}
                     />
                     <ValidationTextField
@@ -117,7 +120,7 @@ const Profile: React.FC = () => {
                         label="電話番号"
                         name="tel"
                         autoComplete="tel"
-                        autoFocus
+                        
                         defaultValue={user.tel}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfTel(e.target.value) }}
                     />
@@ -129,7 +132,7 @@ const Profile: React.FC = () => {
                         label="郵便番号"
                         name="postcode"
                         autoComplete="postcode"
-                        autoFocus
+                        
                         defaultValue={user.postcode}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfPostcode(e.target.value) }}
                     />
@@ -141,7 +144,7 @@ const Profile: React.FC = () => {
                         label="都道府県"
                         name="add1"
                         autoComplete="add1"
-                        autoFocus
+                        
                         defaultValue={user.add1}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfAdd1(e.target.value) }}
                     />
@@ -154,7 +157,7 @@ const Profile: React.FC = () => {
                         name="add2"
                         autoComplete="add2"
                         defaultValue={user.add2}
-                        autoFocus
+                        
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfAdd2(e.target.value) }}
                     />
                     <ValidationTextField
@@ -166,7 +169,7 @@ const Profile: React.FC = () => {
                         name="add3"
                         autoComplete="add3"
                         defaultValue={user.add3}
-                        autoFocus
+                        
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setProfAdd3(e.target.value) }}
                     />
                 </Box>

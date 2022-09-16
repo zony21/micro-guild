@@ -1,27 +1,79 @@
-
 .mypage_continar {
     display: flex;
     justify-content: center;
-    background: #e7ebf0;
+    background: var(--main-background);
+    padding: 20px 0 0;
+    @media only screen and (max-width: 600px) {
+        display: block;
+    }
     nav {
-        max-width: 300px;
-        width: 30%;
-        padding: 10px;
-        ul{
-            background: #ffffff;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        width: 250px;
+        border-right: 1px solid #e6e6e6;
+        margin: 0 0 10px;
+        @media only screen and (max-width: 600px) {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            margin: 0;
+            border: none;
+            z-index: 99;
+        }
+        ul {
+            @media only screen and (max-width: 600px) {
+                display: flex;
+                padding: 0;
+            }
+            li {
+                position: relative;
+                @media only screen and (max-width: 600px) {
+                    background: #ffffff;
+                    span {
+                        font-size: 11px;
+                    }
+                }
+                &::after {
+                    width: 80%;
+                    height: 1px;
+                    background: #e6e6e6;
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    margin: 0 auto;
+                    bottom: -1px;
+                }
+                &:last-child {
+                    border: none;
+                    &::after {
+                        display: none;
+                    }
+                }
+                a {
+                    @media only screen and (max-width: 600px) {
+                        padding: 15px;
+                        color: var(--main-color);
+                    }
+                }
+            }
         }
     }
     main {
-        max-width: calc(100% - 300px);
-        width: 70%;
-        padding: 10px;
-        height: 100vh;
-        .main_in{
-            background: #ffffff;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-            padding: 10px 20px;
+        width: calc(100% - 250px);
+        min-width: 450px;
+        min-height: calc(100vh - 90px);
+        @media only screen and (max-width: 600px) {
+            min-width: auto;
+            width: 100%;
+        }
+        .main_in {
             height: 100%;
+            padding: 50px 20px 20px 100px;
+            max-width: 1150px;
+            @media only screen and (max-width: 600px) {
+                padding: 0 4% 20px;
+
+            }
         }
     }
 }

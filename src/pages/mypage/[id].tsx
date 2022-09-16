@@ -9,7 +9,7 @@ import { login, logout, selectUser } from '../../features/userSlice'
 import Layout from "../../components/Layout";
 import { auth, db } from '../../firebase'
 
-const Profile = () => {
+const Mypages = () => {
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -21,6 +21,7 @@ const Profile = () => {
         if (docSnap.exists()) {
           dispatch(login({
             uid: authUser.uid,
+            email: authUser.email,
             photoUrl: authUser.photoURL,
             displayName: docSnap.data().displayName,
             company: docSnap.data().company,
@@ -35,6 +36,7 @@ const Profile = () => {
           dispatch(login({
             uid: authUser.uid,
             photoUrl: authUser.photoURL,
+            email: authUser.email,
             displayName: "",
             hpurl: "",
             company: "",
@@ -61,7 +63,7 @@ const Profile = () => {
         :
         (
           <div className="loader_wrap">
-            <FadeLoader color="#db8c6c"/>
+            <FadeLoader color="#db8c6c" />
           </div>
         )
       }
@@ -69,4 +71,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Mypages
