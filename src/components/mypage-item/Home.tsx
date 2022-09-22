@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { selectUser } from '../../features/userSlice';
 import { useSelector } from 'react-redux';
 import { db } from '../../firebase';
-import { doc, collection, onSnapshot, orderBy, query, getDoc, where } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import Post from '../Post';
 import postyle from "../../styles/Post.module.scss"
 import InfiniteScroll from "react-infinite-scroller"
@@ -88,31 +88,25 @@ const Home: React.FC = () => {
     }
   }, [])
   return (
-    <ul className={postyle.pos_wrap}>
+    <div className={postyle.pos_wrap}>
       {myposts.map((post) => {
         return (
-          <InfiniteScroll
-            dataLength={myposts.length}
-            hasMore={true}
-            loader={FadeLoader}
-          >
-            <Post
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              text={post.text}
-              add1={post.add1}
-              add2={post.add2}
-              add3={post.add3}
-              salarytype={post.salarytype}
-              salarymax={post.salarymax}
-              salarymin={post.salarymin}
-              workingstatus={post.workingstatus}
-            />
-          </InfiniteScroll>
+          <Post
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            text={post.text}
+            add1={post.add1}
+            add2={post.add2}
+            add3={post.add3}
+            salarytype={post.salarytype}
+            salarymax={post.salarymax}
+            salarymin={post.salarymin}
+            workingstatus={post.workingstatus}
+          />
         )
       })}
-    </ul>
+    </div>
   )
 }
 

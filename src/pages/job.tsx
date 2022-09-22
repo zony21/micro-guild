@@ -1,8 +1,11 @@
 import React from 'react'
+import Layout from '../components/Layout'
 
 const Job = () => {
   return (
-    <div>jobs</div>
+    <Layout>
+      <div>jobs</div>
+    </Layout>
   )
 }
 

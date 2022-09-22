@@ -34,7 +34,7 @@ const Post = (props) => {
     }
     return (
         <>
-            <li className={styles.posts_item}>
+            <div className={styles.posts_item}>
                 <div className={styles.post_set} id={`post_set_${props.id}`}>
                     <button onClick={onSetpoup} className={styles.post_set_icon}><MoreHorizIcon /></button>
                     {posetopen ? (
@@ -70,7 +70,7 @@ const Post = (props) => {
                         </div>
                     </a>
                 </Link>
-            </li>
+            </div>
         </>
     )
 }

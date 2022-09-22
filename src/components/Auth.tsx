@@ -41,7 +41,7 @@ import {
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { updateUserProfile } from '../features/userSlice'
 
-const theme = createTheme();
+const theme = createTheme()
 
 function getModalStyle() {
   const top = 50
@@ -94,15 +94,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(10),
   },
-}));
+}))
 
 const Auth: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-  };
-  const classes = useStyles();
-  const dispatch = useDispatch();
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+  }
+  const classes = useStyles()
+  const dispatch = useDispatch()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [avatarImage, setAvatarImage] = useState<File | null>(null)
@@ -110,7 +110,7 @@ const Auth: React.FC = () => {
   const [resetEmail, setResetEmail] = useState("")
   const [open, setOpen] = React.useState(false)
   const [avatardemoImage, setAvatardemoImage] = useState("")
-  const [checked, setChecked] = React.useState([true, false]);
+  const [checked, setChecked] = React.useState(false)
 
   const sendResetEmail = async (e: React.MouseEvent<HTMLElement>) => {
     await sendPasswordResetEmail(auth, resetEmail).then(() => {
@@ -123,9 +123,8 @@ const Auth: React.FC = () => {
   }
 
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, event.target.checked]);
-  };
-
+    setChecked(event.target.checked)
+  }
   const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files![0]) {
       setAvatarImage(e.target.files![0])
@@ -139,12 +138,12 @@ const Auth: React.FC = () => {
     }
   }
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   const signInEmail = async () => {
     await signInWithEmailAndPassword(auth, email, password)
   }
@@ -154,24 +153,24 @@ const Auth: React.FC = () => {
       auth,
       email,
       password
-    );
-    let url = "";
+    )
+    let url = ""
     if (avatarImage) {
       const S =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      const N = 16;
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      const N = 16
       const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
         .map((n) => S[n % S.length])
-        .join("");
-      const fileName = randomChar + "_" + avatarImage.name;
-      await uploadBytes(ref(storage, `avatars/${fileName}`), avatarImage);
-      url = await getDownloadURL(ref(storage, `avatars/${fileName}`));
+        .join("")
+      const fileName = randomChar + "_" + avatarImage.name
+      await uploadBytes(ref(storage, `avatars/${fileName}`), avatarImage)
+      url = await getDownloadURL(ref(storage, `avatars/${fileName}`))
     }
 
     if (authUser.user) {
       await updateProfile(authUser.user, {
         photoURL: url,
-      });
+      })
     }
 
     dispatch(
@@ -187,8 +186,8 @@ const Auth: React.FC = () => {
         add2: '',
         add3: ''
       })
-    );
-  };
+    )
+  }
   const signInGoogle = async () => {
     await signInWithPopup(auth, provider).catch((err) => alert(err.message))
   }
@@ -352,7 +351,6 @@ const Auth: React.FC = () => {
                 label="個人情報保護に同意する"
                 control={
                   <Checkbox
-                    checked={checked[0] && checked[1]}
                     onChange={handleChange1}
                   />
                 }
@@ -362,7 +360,7 @@ const Auth: React.FC = () => {
           <DialogActions>
             <Button variant="outlined" color="error" onClick={handleClose}>キャンセル</Button>
             <Button
-              disabled={!email || password.length < 6 || !avatarImage || !checked[0] || !email.match(/.+@.+\..+/)}
+              disabled={!email || password.length < 6 || !checked || !email.match(/.+@.+\..+/)}
               variant="contained"
               onClick={
                 async () => {
@@ -402,7 +400,7 @@ const Auth: React.FC = () => {
         </Modal>
       </Container>
     </ThemeProvider>
-  );
+  )
 }
 
 export default Auth

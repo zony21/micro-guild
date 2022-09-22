@@ -10,7 +10,7 @@ const IndexPage: NextPage = () => {
       <Head>
         <title>求人SNS | Micro Guild</title>
       </Head>
-      <Link href="/recruit">
+      <Link href="/mypage/home">
         <div className="bt"><span>仕事を募集する</span></div>
       </Link>
       <Link href="/job">

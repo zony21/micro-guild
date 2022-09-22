@@ -16,7 +16,7 @@ const ValidationTextField = styled(TextField)({
         borderColor: 'yellow',
     },
 })
-const Profile: React.FC = (props) => {
+const SetProfile: React.FC = (props) => {
     const user = useSelector(selectUser)
     const [profdisplayName, setProfdisplayName] = useState("")
     const [profcompany, setProfCompany] = useState("")
@@ -26,14 +26,6 @@ const Profile: React.FC = (props) => {
     const [profadd1, setProfAdd1] = useState("")
     const [profadd2, setProfAdd2] = useState("")
     const [profadd3, setProfAdd3] = useState("")
-    // console.log(profdisplayName)
-    // console.log(profcompany)
-    // console.log(proftel)
-    // console.log(profpostcode)
-    // console.log(profurl)
-    // console.log(profadd1)
-    // console.log(profadd2)
-    // console.log(profadd3)
     useEffect(() => {
         onAuthStateChanged(auth, async (authUser) => {
             console.log(authUser.uid)
@@ -63,7 +55,7 @@ const Profile: React.FC = (props) => {
                 const docRef = doc(db, "users", authUser.uid)
                 const docSnap = await getDoc(docRef)
                 if (docSnap.exists()) {
-                    await updateDoc(docRef, {
+                    await setDoc(docRef, {
                         displayName: profdisplayName,
                         hpurl: profurl,
                         company: profcompany,
@@ -80,16 +72,6 @@ const Profile: React.FC = (props) => {
             }
         }
     }
-    // useEffect(()=>{
-    //     setProfdisplayName(user.displayName)
-    //     setProfUrl(user.hpurl)
-    //     setProfCompany(user.company)
-    //     setProfTel(user.tel)
-    //     setProfPostcode(user.postcode)
-    //     setProfAdd1(user.add1)
-    //     setProfAdd2(user.add2)
-    //     setProfAdd3(user.add3)
-    // },[user.company])
     return (
         <>
             <Box component="form" onSubmit={onProfCreate}>
@@ -196,4 +178,4 @@ const Profile: React.FC = (props) => {
     )
 }
 
-export default Profile
+export default SetProfile
