@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { auth } from '../firebase'
-import LogoutIcon from '@mui/icons-material/Logout';
-import { selectUser } from '../features/userSlice';
-import { useSelector } from 'react-redux';
-import { signOut } from 'firebase/auth';
+import React from 'react'
+import Link from 'next/link';
 
 const Header = () => {
-  const user = useSelector(selectUser)
-  const [userc, setUserc] = useState(false)
-  useEffect(() => {
-    if (user.uid) {
-      setUserc(true)
-    }
-  }, [])
   return (
     <header className="com_hed">
       <h1 className="logo">
-        Micro Guild
+        <Link href="/">
+          <a>Micro Guild</a>
+        </Link>
       </h1>
-      {userc ? <button className='logout' onClick={() => signOut(auth)}><LogoutIcon sx={{ color: '#ffffff' }} /></button> : ""}
+      {/* {userc ? (
+        <>
+          <button className='logout' onClick={() => signOut(auth)}><LogoutIcon sx={{ color: '#ffffff' }} /></button>
+        </>
+      ) : (
+        <>
+          <Link href="/mypage/home">
+            <a>求人掲載</a>
+          </Link>
+        </>
+      )} */}
     </header>
   )
 }

@@ -1,8 +1,8 @@
 import { Button, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import { onAuthStateChanged } from 'firebase/auth'
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import { doc, setDoc } from 'firebase/firestore'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
 import { auth, db } from '../../firebase'
@@ -26,13 +26,13 @@ const SetProfile: React.FC = (props) => {
     const [profadd1, setProfAdd1] = useState("")
     const [profadd2, setProfAdd2] = useState("")
     const [profadd3, setProfAdd3] = useState("")
-    useEffect(() => {
-        onAuthStateChanged(auth, async (authUser) => {
-            console.log(authUser.uid)
-            const docRef1 = doc(db, "users", authUser.uid)
-            const docSnap = await getDoc(docRef1)
-            if (!docSnap.exists()) {
-                await setDoc((docRef1), {
+    const onProfCreate = (event: React.FormEvent<HTMLFormElement>) => {
+        var result = confirm('登録しますか？')
+        if (result) {
+            const unSub = onAuthStateChanged(auth, async (authUser) => {
+                console.log(authUser.uid)
+                const docRef = doc(db, "users", authUser.uid)
+                await setDoc(docRef, {
                     displayName: profdisplayName,
                     hpurl: profurl,
                     company: profcompany,
@@ -41,31 +41,8 @@ const SetProfile: React.FC = (props) => {
                     add1: profadd1,
                     add2: profadd2,
                     add3: profadd3,
+                    userUrl: user.photoUrl
                 })
-            }
-        })
-    }, [])
-    const onProfCreate = (event: React.FormEvent<HTMLFormElement>) => {
-        if (user.company && user.tel && user.postcode && user.add1 && user.add2 && user.add3) {
-            event.preventDefault()
-        }
-        var result = confirm('更新しますか？')
-        if (result) {
-            const unSub = onAuthStateChanged(auth, async (authUser) => {
-                const docRef = doc(db, "users", authUser.uid)
-                const docSnap = await getDoc(docRef)
-                if (docSnap.exists()) {
-                    await setDoc(docRef, {
-                        displayName: profdisplayName,
-                        hpurl: profurl,
-                        company: profcompany,
-                        tel: proftel,
-                        postcode: profpostcode,
-                        add1: profadd1,
-                        add2: profadd2,
-                        add3: profadd3,
-                    })
-                }
             })
             return () => {
                 unSub()

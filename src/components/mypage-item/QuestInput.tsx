@@ -1,15 +1,15 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextareaAutosize, TextField, Stack, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material'
-import { addDoc, collection, doc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextareaAutosize, TextField, Stack, FormControl, InputLabel, Select, MenuItem, Box, DialogContentText } from '@mui/material'
+import { addDoc, collection, doc, getDocs, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
-import { db } from '../../firebase'
-import AddIcon from '@mui/icons-material/Add';
+import { auth, db } from '../../firebase'
+import AddIcon from '@mui/icons-material/Add'
 import styles from "../../styles/Quest.module.scss"
-import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import AdapterDateFns from '@date-io/date-fns';
-import { Dayjs } from 'dayjs';
-import moment from 'moment'
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import AdapterDateFns from '@date-io/date-fns'
+import jaLocale from "date-fns/locale/ja"
+import dayjs from 'dayjs'
 
 const QuestInput: React.FC = () => {
     const user = useSelector(selectUser)
@@ -25,23 +25,25 @@ const QuestInput: React.FC = () => {
     const [salarymax, setSalarymax] = useState("")
     const [workingstatus, setWorkingstatus] = useState("")
     var date = new Date()
-    var limitdays = moment(date).add(5, 'M').format()
-    const [rlimit, setRlimit] = useState<Dayjs | null | string>(
+    var limitdays = dayjs(date).add(5, 'M').format("YYYY-MM-DD")
+    var mindays = dayjs(date).format("YYYY-MM-DD")
+    const [rlimit, setRlimit] = useState<null | string>(
         limitdays
-    );
+    )
     const [recruit, setRecruit] = useState("")
     const [remail, setRemail] = useState("")
     const [remailtxt, setRemailtxt] = useState("")
+    const [postmax, setPostMax] = React.useState(false)
     const [open, setOpen] = React.useState(false)
-    const handleChangedays = (newValue: Dayjs | null) => {
-        setRlimit(newValue);
-    };
+    const handleChangedays = (newValue: null) => {
+        setRlimit(newValue)
+    }
     const handleClose = () => {
-        setOpen(false);
-    };
+        setOpen(false)
+    }
     const handleClickOpen = () => {
-        setOpen(true);
-    };
+        setOpen(true)
+    }
     useEffect(() => {
         setPostcode(user.postcode)
         setAdd1(user.add1)
@@ -49,7 +51,19 @@ const QuestInput: React.FC = () => {
         setAdd3(user.add3)
         setRemail(user.email)
     }, [])
-    const sendQuest = (e: React.FormEvent<HTMLFormElement>) => {
+    useEffect(() => {
+        const data = async () => {
+            const max = collection(db, "users", user.uid, "myposts")
+            await getDocs(max).then((maxsnap) => {
+                const size = maxsnap.size
+                if (size <= 3) {
+                    setPostMax(true)
+                }
+            })
+        }
+        data()
+    }, [postmax])
+    const sendQuest = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const adddocRef = addDoc(collection(db, "posts"), {
             title: title,
@@ -70,9 +84,9 @@ const QuestInput: React.FC = () => {
             timestamp: serverTimestamp(),
             username: user.displayName,
             userid: user.uid,
-        }).then(function (docQuest) {
-            const docRef = doc(db, "users", user.uid, "myposts", docQuest.id);
-            setDoc((docRef), {
+        }).then(async function (docQuest) {
+            const docRef1 = doc(db, "users", user.uid, "myposts", docQuest.id)
+            setDoc((docRef1), {
                 timestamp: serverTimestamp(),
             })
         })
@@ -103,8 +117,11 @@ const QuestInput: React.FC = () => {
             </div>
             <Dialog open={open} onClose={handleClose} fullWidth>
                 <DialogTitle>求人投稿</DialogTitle>
-                <Box component="form" onSubmit={sendQuest}>
+                <Box component="form" onSubmit={sendQuest} sx={{ fontSize: 15 }}>
                     <DialogContent>
+                        <DialogContentText>
+                            投稿上限は3つです
+                        </DialogContentText>
                         <Stack spacing={2}>
                             <TextField
                                 margin="normal"
@@ -208,6 +225,7 @@ const QuestInput: React.FC = () => {
                                 label="給与下限"
                                 name="salarymin"
                                 autoComplete="salarymin"
+                                type="number"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setSalarymin(e.target.value) }}
                             />
                             <TextField
@@ -218,6 +236,7 @@ const QuestInput: React.FC = () => {
                                 label="給与上限"
                                 name="salarymax"
                                 autoComplete="salarymax"
+                                type="number"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setSalarymax(e.target.value) }}
                             />
                             <FormControl fullWidth>
@@ -240,13 +259,15 @@ const QuestInput: React.FC = () => {
                                     <MenuItem value={"その他"}>その他</MenuItem>
                                 </Select>
                             </FormControl>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={jaLocale}>
                                 <DesktopDatePicker
                                     label="投稿期限"
                                     inputFormat="MM/dd/yyyy"
+                                    maxDate={limitdays}
+                                    minDate={mindays}
                                     value={rlimit}
                                     onChange={handleChangedays}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField {...params} helperText="最大で投稿日から5ヶ月間です" />}
                                 />
                             </LocalizationProvider>
                             <TextField
@@ -283,8 +304,15 @@ const QuestInput: React.FC = () => {
                                 autoComplete="current-password"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRemailtxt(e.target.value) }}
                             />
-                            <Button onClick={handleClose} fullWidth variant="contained" type='submit' disabled={!title || !title || !remail || !remail.match(/.+@.+\..+/)}>
-                                投稿
+                            <Button onClick={handleClose} fullWidth variant="contained" type='submit' disabled={!postmax || !title || !text || !recruit && !remail || !remail.match(/.+@.+\..+/)}>
+                                {!postmax ?
+                                    <>
+                                        投稿上限です
+                                    </>
+                                    :
+                                    <>
+                                        投稿
+                                    </>}
                             </Button>
                         </Stack>
                     </DialogContent>
@@ -293,13 +321,5 @@ const QuestInput: React.FC = () => {
         </>
     )
 }
-
-const salarytypes = [
-    { title: '時給', id: 1 },
-    { title: '日給', id: 2 },
-    { title: '月給', id: 3 },
-    { title: '年収', id: 4 },
-    { title: '週休', id: 5 },
-]
 
 export default QuestInput

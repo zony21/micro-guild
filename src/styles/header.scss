@@ -1,12 +1,15 @@
-.com_hed{
-    background: var(--main-color);
+.com_hed {
+    // background: var(--main-color);
     display: flex;
     justify-content: space-between;
-    color: #ffffff;
     padding: 20px;
     width: 100%;
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 99;
+    z-index: 10;
+    color: #965d57;
+    a {
+        color: #965d57;
+    }
 }

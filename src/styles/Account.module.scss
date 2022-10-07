@@ -22,3 +22,37 @@ ul.ac_list {
         }
     }
 }
+.avatar_buttton {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    .img_up_txt {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        font-size: 11px;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.6);
+        text-align: center;
+        width: 100%;
+        padding: 3px 0 10px;
+        opacity: 0;
+        transition: 0.6s;
+    }
+    @media only screen and (min-width: 1025px) {
+        &:hover {
+            .img_up_txt {
+                opacity: 1;
+            }
+        }
+    }
+}
+.dialog_icon_box{
+    text-align: center;
+}
+.login_hiddenIcon{
+    display: none;
+}

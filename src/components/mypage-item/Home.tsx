@@ -5,8 +5,6 @@ import { db } from '../../firebase';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import Post from '../Post';
 import postyle from "../../styles/Post.module.scss"
-import InfiniteScroll from "react-infinite-scroller"
-import FadeLoader from "react-spinners/ClipLoader";
 
 interface PROPS {
   id: string;
@@ -55,6 +53,7 @@ const Home: React.FC = () => {
       username: ""
     },
   ])
+  const [postlength, setPostLength] = useState(false)
   useEffect(() => {
     const q = query(collection(db, "posts"), orderBy("timestamp", "desc"), where("userid", "==", user.uid))
     const unSub = onSnapshot(q, (snapshot) => {
@@ -87,25 +86,39 @@ const Home: React.FC = () => {
       unSub()
     }
   }, [])
+  useEffect(() => {
+    if (myposts.length != 0) {
+      setPostLength(true)
+    }
+    
+  }, [])
   return (
     <div className={postyle.pos_wrap}>
-      {myposts.map((post) => {
-        return (
-          <Post
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            text={post.text}
-            add1={post.add1}
-            add2={post.add2}
-            add3={post.add3}
-            salarytype={post.salarytype}
-            salarymax={post.salarymax}
-            salarymin={post.salarymin}
-            workingstatus={post.workingstatus}
-          />
+      {postlength ?
+        myposts.map((post) => {
+          return (
+            <Post
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              text={post.text}
+              add1={post.add1}
+              add2={post.add2}
+              add3={post.add3}
+              salarytype={post.salarytype}
+              salarymax={post.salarymax}
+              salarymin={post.salarymin}
+              workingstatus={post.workingstatus}
+              userid={post.userid}
+              rlimit={post.rlimit}
+            />
+          )
+        }) : (
+          <>
+            <p className={postyle.nonetxt}>投稿はありません</p>
+          </>
         )
-      })}
+      }
     </div>
   )
 }

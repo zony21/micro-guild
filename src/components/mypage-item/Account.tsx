@@ -1,14 +1,16 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, styled, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, styled, TextField, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import React, { useEffect, useState } from 'react'
 import { selectUser } from '../../features/userSlice'
 import { useSelector } from 'react-redux'
 import styles from "../../styles/Account.module.scss"
-import { deleteUser, EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from 'firebase/auth'
-import { auth, db } from '../../firebase'
+import { deleteUser, EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential, signInWithEmailAndPassword, signOut, updateEmail, updatePassword, updateProfile } from 'firebase/auth'
+import { auth, db, storage } from '../../firebase'
 import { collection, deleteDoc, doc, getDoc, getDocs } from 'firebase/firestore'
 import { useNavigate } from 'react-router'
 import { useRouter } from 'next/router'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { async } from '@firebase/util'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -48,13 +50,16 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 const Account = () => {
   const user = useSelector(selectUser)
+  const [avatarImage, setAvatarImage] = useState<File | null>(null)
   const [open1, setOpen1] = React.useState(false)
   const [open2, setOpen2] = React.useState(false)
   const [open3, setOpen3] = React.useState(false)
-  const [provider, setProvider] = useState("")
+  const [open4, setOpen4] = React.useState(false)
+  const [provider, setProvider] = React.useState(false)
   const [resetemail, setResetEmail] = useState("")
   const [resetpassword, setResetPassword] = useState("")
   const [password, setPassword] = useState("")
+  const [avatardemoImage, setAvatardemoImage] = useState("")
 
   const handleClickOpen1 = () => {
     setOpen1(true)
@@ -78,16 +83,23 @@ const Account = () => {
   const handleClose3 = () => {
     setOpen3(false)
   }
+  const handleClose4 = () => {
+    setOpen4(false)
+    setAvatardemoImage("")
+    setAvatarImage(null)
+  }
   const router = useRouter()
   const onAccountDelete = async () => {
     var result = confirm('アカウントを削除しますか？')
     if (result) {
       onAuthStateChanged(auth, async (authUser) => {
-        const docRef = collection(db, "users", authUser.uid, "myposts")
-        const docSnap = await getDocs(docRef)
-        docSnap.forEach(async (docde) => {
-          await deleteDoc(doc(db, "posts", docde.id))
-        })
+        if (authUser !== null) {
+          const docRef = collection(db, "users", authUser.uid, "myposts")
+          const docSnap = await getDocs(docRef)
+          docSnap.forEach(async (docde) => {
+            await deleteDoc(doc(db, "posts", docde.id))
+          })
+        }
       })
       deleteDoc(doc(db, "users", auth.currentUser.uid))
       const credential = EmailAuthProvider.credential(
@@ -104,15 +116,6 @@ const Account = () => {
       }).catch((error) => {
         alert("パスワードが間違っています")
       })
-      // deleteUser(auth.currentUser).then(async () => {
-      //   signOut(auth).then(() => {
-      //     router.replace('/')
-      //   }).catch((error) => {
-      //     alert("signOutです")
-      //   })
-      // }).catch((error) => {
-      //   alert("deleteUserです")
-      // })
     }
   }
   const onNewEmail = async () => {
@@ -151,26 +154,80 @@ const Account = () => {
         setPassword("")
       })
   }
+  const onImgupdateOpen = () => {
+    setOpen4(true)
+  }
+  const onImgupdate = async () => {
+    let url = ""
+    if (avatarImage) {
+      const S =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      const N = 16
+      const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
+        .map((n) => S[n % S.length])
+        .join("")
+      const fileName = randomChar + "_" + avatarImage.name
+      await uploadBytes(ref(storage, `avatars/${fileName}`), avatarImage)
+      url = await getDownloadURL(ref(storage, `avatars/${fileName}`))
+    }
+    updateProfile(auth.currentUser, {
+      photoURL: url
+    }).then(() => {
+      alert("変更しました")
+      setAvatardemoImage("")
+      setAvatarImage(null)
+    }).catch((error) => {
+      alert("変更に失敗しました")
+      setAvatardemoImage("")
+      setAvatarImage(null)
+    })
+  }
   useEffect(() => {
     onAuthStateChanged(auth, async (authUser) => {
-      if (user.uid) {
-        setProvider(authUser.providerData[0].providerId)
-      }else{
-        setProvider("")
+      if (authUser !== null) {
+        if (authUser.providerData[0].providerId != "google.com") {
+          setProvider(true)
+        }
       }
     })
   }, [])
+  const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files![0]) {
+      setAvatarImage(e.target.files![0])
+      const file = e.target.files[0]
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        setAvatardemoImage(e.target.result)
+      }
+      reader.readAsDataURL(file)
+      e.target.value = ""
+    }
+  }
   return (
     <>
       <ul className={styles.ac_list}>
         <li>
           <div className={styles.tl}>
-            <h3>メールアドレス</h3>
-            <span>{user.email}</span>
+            <h3>プロフィール画像</h3>
           </div>
-          <Button variant="outlined" onClick={handleClickOpen1}>メールアドレス変更</Button>
+          <button onClick={onImgupdateOpen} className={styles.avatar_buttton}><Avatar src={user.photoUrl} sx={{ width: 60, height: 60 }} /><span className={styles.img_up_txt}>編集</span></button>
         </li>
-        {provider != "google.com" ? (
+        {/* <li>
+          <div className={styles.tl}>
+            <h3>プラン</h3>
+          </div>
+          <div className="plan_type">ベーシックプラン</div>
+        </li> */}
+        {provider ? (
+          <li>
+            <div className={styles.tl}>
+              <h3>メールアドレス</h3>
+              <span>{user.email}</span>
+            </div>
+            <Button variant="outlined" onClick={handleClickOpen1}>メールアドレス変更</Button>
+          </li>
+        ) : ""}
+        {provider ? (
           <li>
             <div className={styles.tl}>
               <h3>パスワード</h3>
@@ -289,6 +346,30 @@ const Account = () => {
           </Button>
         </DialogActions>
       </BootstrapDialog>
+      <Dialog open={open4} onClose={handleClose4}>
+        <DialogTitle>プロフィール画像変更</DialogTitle>
+        <DialogContent className={styles.dialog_icon_box}>
+          <IconButton>
+            <label className={styles.avatar_buttton}>
+              <Avatar
+                src={avatardemoImage}
+                sx={{ width: 60, height: 60 }}
+              />
+              <input
+                className={styles.login_hiddenIcon}
+                type="file"
+                onChange={onChangeImageHandler}
+              />
+              <span className={styles.img_up_txt}>編集</span>
+            </label>
+          </IconButton>
+
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose4}>キャンセル</Button>
+          <Button onClick={onImgupdate} variant="contained">変更</Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

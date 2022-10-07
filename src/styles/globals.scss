@@ -1,15 +1,20 @@
-html {
-}
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700;900&family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&display=swap");
 body {
+    --main-color: #db8c6c;
+    --main-color-hover: #bf785c;
+    --main-color2-hover: #fff9f6;
+    --main-background: #faf9f8;
+    --main-border: #e6e6e6;
+    --txt-color: #5a3c37;
+    --main-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     margin: 0;
     position: relative;
     font-family: "Noto Sans JP", sans-serif;
     transition: 0.6s;
     background: #ffffff;
-    color: #2d2d2d;
-    padding: 67px 0 0;
-    --main-color: #db8c6c;
-    --main-background: #faf9f8;
+    color: var(--txt-color);
+    padding: 80px 0 0;
+    background: var(--main-background);
 }
 .body_open {
     opacity: 1 !important;
@@ -62,12 +67,10 @@ body,
 header {
     box-sizing: border-box;
 }
-main {
-}
 .txt {
     line-height: 180%;
     letter-spacing: 0.06em;
-    font-size: 1.25rem;
+    font-size: 15px;
 }
 /* iOSでのデフォルトスタイルをリセット */
 input[type="submit"],
@@ -116,16 +119,33 @@ button {
         display: none !important;
     }
 }
-.logo{
+.logo {
     font-size: 20px;
     letter-spacing: 0.1em;
     font-family: "Noto Sans JP", sans-serif;
     font-weight: 600;
 }
+section {
+    margin: 0 0 70px;
+}
+/*****************************************
+   h1
+****************************************/
+h1 {
+    font-size: 25px;
+}
 /*****************************************
    h2
 ****************************************/
 h2 {
+    font-size: 20px;
+    font-weight: normal;
+}
+/*****************************************
+   h2.com
+****************************************/
+h2.com_h2 {
+    font-weight: 600;
     margin: 0 0 50px;
 }
 /*****************************************
@@ -133,13 +153,30 @@ h2 {
 ****************************************/
 h3 {
     margin: 0 0 30px;
+    font-size: 18px;
+    font-weight: 500;
 }
 /*****************************************
    .bt
 ****************************************/
 .bt {
+    max-width: 300px;
+    transition: 0.2s;
+    .bt_link {
+        display: block;
+        font-size: 16px;
+        padding: 10px 35px;
+        border: 1px solid rgba(0, 0, 0, 0);
+        letter-spacing: 0.07em;
+        font-weight: 500;
+        text-align: center;
+    }
 }
-
+.bt_wrap {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 .input_box {
     margin: 0 0 30px;
 }
@@ -153,9 +190,4 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-/*****************************************
-   ログアウト
-****************************************/
-.logout {
 }

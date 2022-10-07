@@ -11,7 +11,7 @@ const Main = (props) => {
                 {
                     props.page === "/mypage/home" ? (
                         <>
-                            <h2>ホーム</h2>
+                            <h2 className={`com_h2`}>ホーム</h2>
                             <h3>自分の求人</h3>
                             <Home />
                         </>
@@ -20,7 +20,7 @@ const Main = (props) => {
                 {
                     props.page === "/mypage/profile" ? (
                         <>
-                            <h2>企業情報</h2>
+                            <h2 className={`com_h2`}>企業情報</h2>
                             <h3>情報更新</h3>
                             <Profile />
                         </>
@@ -29,7 +29,7 @@ const Main = (props) => {
                 {
                     props.page === "/mypage/account" ? (
                         <>
-                            <h2>アカウント</h2>
+                            <h2 className={`com_h2`}>アカウント</h2>
                             <Account />
                         </>
                     ) : ""

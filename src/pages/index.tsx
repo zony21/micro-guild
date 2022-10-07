@@ -13,7 +13,7 @@ const IndexPage: NextPage = () => {
       <Link href="/mypage/home">
         <div className="bt"><span>仕事を募集する</span></div>
       </Link>
-      <Link href="/job">
+      <Link href="/jobs">
         <div className="bt"><span>仕事を探す</span></div>
       </Link>
     </Layout>
