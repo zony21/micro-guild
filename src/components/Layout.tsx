@@ -15,6 +15,7 @@ const Layout = ({ children }) => {
                 <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#5bbad5" />
                 <meta name="msapplication-TileColor" content="#faf9f8" />
                 <meta name="theme-color" content="#faf9f8"></meta>
+                <meta name="google-site-verification" content="googled2a89a826aa3a279.html" />
             </Head>
             <Header />
             {children}
