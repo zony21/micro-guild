@@ -111,8 +111,8 @@ const Account = () => {
         credential
       )
       await deleteUser(result.user).then(() => {
-        alert("アカウントを削除しました")
         router.replace('/')
+        alert("アカウントを削除しました")
       }).catch((error) => {
         alert("パスワードが間違っています")
       })

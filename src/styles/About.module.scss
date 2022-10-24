@@ -1,0 +1,97 @@
+.about_main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    @media only screen and (max-width: 600px) {
+        display: block;
+    }
+    .about_contents_wrap {
+        width: calc(100% - 300px);
+        @media only screen and (max-width: 600px) {
+            width: 100%;
+        }
+        .about_sec {
+            margin: 0;
+            // .about_h1 {
+
+            // }
+            .about_h2 {
+                font-size: 24px;
+                margin: 0 0 50px;
+            }
+            .about_h3 {
+                font-size: 18px;
+            }
+            .about_contents_tyu {
+                display: block;
+                color: rgb(115, 115, 115);
+            }
+            .img{
+                position: relative;
+                padding: 68% 0 0;
+                margin: 20px 0 0;
+            }
+            .quote{
+                font-size: 12px;
+                text-align: center;
+            }
+            &:nth-child(n + 2) {
+                padding: 80px 0 0;
+            }
+        }
+        .about_sec1{
+            padding: 0;
+        }
+        .about_sec2 {
+            ul{
+                li{
+                    &:nth-child(n+2){
+                        margin: 30px 0 0;
+                    }
+                }
+            }
+        }
+    }
+    .about_contents_side {
+        width: 250px;
+        position: sticky;
+        top: 80px;
+        @media only screen and (max-width: 600px) {
+            display: none;
+        }
+        ul {
+            background: #ffffff;
+            border-radius: 5px;
+            box-shadow: var(--main-shadow);
+            padding: 20px 30px;
+            li {
+                position: relative;
+                a {
+                    display: block;
+                    padding: 20px 0;
+                    color: var(--txt-color);
+                    font-weight: 500;
+                    @media only screen and (min-width: 1025px) {
+                        &:hover {
+                            color: var(--main-color);
+                        }
+                    }
+                }
+                &:nth-child(n + 2) {
+                    &::after {
+                        content: "";
+                        height: 1px;
+                        width: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        margin: 0 auto;
+                        background: var(--main-color);
+                    }
+                }
+            }
+        }
+    }
+}

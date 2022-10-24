@@ -2,129 +2,131 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 15px;
+    @media only screen and (min-width: 1468px) {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 440px));
+    }
     @media only screen and (max-width: 600px) {
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
-    .posts_item {
-        position: relative;
-        background: #ffffff;
-        box-shadow: var(--main-shadow);
-        border-radius: 5px;
-        border: 1px solid #ffffff;
-        min-height: 300px;
-        transition: 0.6s;
-        .post_set {
+}
+.posts_item {
+    position: relative;
+    background: #ffffff;
+    box-shadow: var(--main-shadow);
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    min-height: 300px;
+    transition: 0.6s;
+    .post_set {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        transition: 0.3s;
+        z-index: 11;
+        .post_set_icon {
+            color: #9c9c9c;
+        }
+        .limit_over_icon{
+            color: #ffffff;
+        }
+        ul {
             position: absolute;
-            right: 10px;
-            top: 10px;
-            transition: 0.3s;
-            z-index: 11;
-            .post_set_icon {
-                color: #9c9c9c;
-            }
-            .limit_over_icon{
-                color: #ffffff;
-            }
-            ul {
-                position: absolute;
-                top: 0;
-                background: #ffffff;
-                border: 1px solid #e6e6e6;
-                width: 150px;
-                z-index: 13;
-                box-shadow: var(--main-shadow);
-                border-radius: 10px;
-                padding: 5px 0;
-                li {
-                    button {
-                        padding: 10px;
-                        font-size: 15px;
-                        width: 100%;
-                        text-align: left;
-                        @media only screen and (min-width: 1025px) {
-                            &:hover {
-                                background: #e6e6e6;
-                            }
+            top: 0;
+            background: #ffffff;
+            border: 1px solid #e6e6e6;
+            width: 150px;
+            z-index: 13;
+            box-shadow: var(--main-shadow);
+            border-radius: 10px;
+            padding: 5px 0;
+            li {
+                button {
+                    padding: 10px;
+                    font-size: 15px;
+                    width: 100%;
+                    text-align: left;
+                    @media only screen and (min-width: 1025px) {
+                        &:hover {
+                            background: #e6e6e6;
                         }
                     }
                 }
             }
-            @media only screen and (min-width: 1025px) {
-                .post_set_icon {
-                    opacity: 0;
-                }
-            }
         }
         @media only screen and (min-width: 1025px) {
-            &:hover {
-                .post_set {
-                    .post_set_icon {
-                        opacity: 1;
-                    }
-                }
-            }
-        }
-        a {
-            color: var(--txt-color);
-            overflow: hidden;
-            display: block;
-        }
-        .tl {
-            font-weight: bold;
-            letter-spacing: 0.05em;
-            font-size: 18px;
-            padding: 1em 1em 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .txt_box {
-            padding: 1em;
-            font-size: 15px;
-            line-height: 180%;
-            .limit_txt {
-                text-align: right;
-                color: #939393;
-            }
-            .job_snippet {
-                overflow: hidden;
-                p {
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 4;
-                }
-            }
-            .job_snippet {
-                margin: 15px 0 0;
-                color: #6f6f6f;
-            }
-        }
-
-        .limit_close {
-            position: absolute;
-            left: -1px;
-            top: -1px;
-            width: calc(100% + 2px);
-            height: calc(100% + 2px);
-            background: rgba(128, 128, 128, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            .limit_close_txt {
-                font-size: 18px;
-                color: #ffffff;
+            .post_set_icon {
+                opacity: 0;
             }
         }
     }
-    .link{
-        @media only screen and (min-width: 1025px) {
-            &:hover {
-                border: 1px solid rgb(0, 21, 255);
+    @media only screen and (min-width: 1025px) {
+        &:hover {
+            .post_set {
+                .post_set_icon {
+                    opacity: 1;
+                }
             }
+        }
+    }
+    a {
+        color: var(--txt-color);
+        overflow: hidden;
+        display: block;
+    }
+    .tl {
+        font-weight: bold;
+        letter-spacing: 0.05em;
+        font-size: 18px;
+        padding: 1em 1em 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .txt_box {
+        padding: 1em;
+        font-size: 15px;
+        line-height: 180%;
+        .limit_txt {
+            text-align: right;
+            color: #939393;
+        }
+        .job_snippet {
+            overflow: hidden;
+            p {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 4;
+            }
+        }
+        .job_snippet {
+            margin: 15px 0 0;
+            color: #6f6f6f;
+        }
+    }
+
+    .limit_close {
+        position: absolute;
+        left: -1px;
+        top: -1px;
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        background: rgba(128, 128, 128, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .limit_close_txt {
+            font-size: 18px;
+            color: #ffffff;
         }
     }
 }
-
+.link{
+    @media only screen and (min-width: 1025px) {
+        &:hover {
+            border: 1px solid rgb(0, 21, 255);
+        }
+    }
+}
 .post_set_close {
     position: fixed;
     left: 0;

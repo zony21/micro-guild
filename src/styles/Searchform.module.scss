@@ -1,0 +1,31 @@
+.search_from_in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--txt-color);
+    max-width: 300px;
+    margin: 0 auto;
+    .search_txt_input {
+        font-size: 16px;
+        color: var(--txt-color);
+        border: none;
+        background: none;
+        width: 100%;
+        height: 35px;
+        padding: 10px;
+        letter-spacing: 0.05em;
+        &:focus {
+            outline: none;
+        }
+    }
+    .search_submit {
+        text-align: center;
+        width: 20%;
+        cursor: pointer;
+        svg {
+            width: 20px;
+            height: 20px;
+            color: var(--txt-color);
+        }
+    }
+}

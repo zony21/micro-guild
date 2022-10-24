@@ -8,6 +8,7 @@ import { async } from '@firebase/util';
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 
 const Post = (props) => {
     const router = useRouter()
@@ -19,6 +20,11 @@ const Post = (props) => {
     const [limit, setLimit] = useState(false)
     const limitday = new Date(props.rlimit)
     const today = new Date()
+    if (props.rlimit.seconds) {
+        var limittxt = `掲載期限 ${moment(moment.unix(props.rlimit.seconds).toDate()).format('YYYY/MM/DD')}まで`
+    } else {
+        var limittxt = `掲載期限 ${moment(moment.unix(props.rlimit._seconds).toDate()).format('YYYY/MM/DD')}まで`
+    }
     const onSetpoup = () => {
         setPosetope(true)
         const getRect = document.getElementById(`post_set_${props.id}`)
@@ -41,10 +47,9 @@ const Post = (props) => {
     }
     useEffect(() => {
         const pass = window.location.pathname
-        if(pass != "/mypage/home"){
+        if (pass != "/mypage/home") {
             setPasslink(true)
         }
-        console.log(pass)
         if (limitday <= today) {
             setLimit(true)
         }
@@ -54,17 +59,17 @@ const Post = (props) => {
     }, [])
     return (
         <>
-            <div className={`${styles.posts_item} ${limit ? "" : styles.link}`}>
+            <div className={`${styles.posts_item} ${limit ? "" : styles.link} post_com`}>
                 {limit ? (
                     <>
                         <div className={styles.limit_close}>
                             <div className={`txt ${styles.limit_close_txt}`}>掲載終了しました</div>
                         </div>
                         <div>
-                            <div className={styles.tl}>{props.title}</div>
+                            <h2 className={styles.tl}>{props.title}</h2>
                             <div className={styles.txt_box}>
                                 {props.rlimit ? (
-                                    <div className={styles.limit_txt}>掲載期限 {props.rlimit.slice(0, -15)}まで</div>
+                                    <div className={styles.limit_txt}>{limittxt}</div>
                                 ) : ""}
                                 <div className={styles.add}>{props.add1}{props.add2}{props.add3}</div>
                                 <div className={styles.metadata}>
@@ -80,10 +85,10 @@ const Post = (props) => {
                 ) : (<>
                     <Link href={`../jobs/${props.id}`}>
                         <a>
-                            <div className={styles.tl}>{props.title}</div>
+                            <h2 className={styles.tl}>{props.title}</h2>
                             <div className={styles.txt_box}>
                                 {props.rlimit ? (
-                                    <div className={styles.limit_txt}>掲載期限 {props.rlimit.slice(0, -15)}まで</div>
+                                    <div className={styles.limit_txt}>{limittxt}</div>
                                 ) : ""}
                                 <div className={styles.add}>{props.add1}{props.add2}{props.add3}</div>
                                 <div className={styles.metadata}>

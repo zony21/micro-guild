@@ -1,4 +1,9 @@
 .side_logout {
+    span {
+        @media only screen and (max-width: 667px) {
+            display: none;
+        }
+    }
     .logout {
         display: flex;
         align-items: center;

@@ -17,18 +17,18 @@ const Sidebar = () => {
                 <SidebarOption text="ホーム" Icon={HomeIcon} slug="home" />
                 <SidebarOption text="企業情報" Icon={ApartmentIcon} slug="profile" />
                 <SidebarOption text="アカウント" Icon={Avatar} slug="account" />
+                <li className={`${styles.side_logout}`}>
+                    <button
+                        className={`${styles.logout}`}
+                        onClick={() => {
+                            var result = confirm('ログアウトしますか？')
+                            if (result) { signOut(auth) }
+                        }}
+                    >
+                        <LogoutIcon sx={{ width: 26, height: 26, color: 'var(--main-color)' }} /><span>ログアウト</span>
+                    </button>
+                </li>
             </List>
-            <div className={`${styles.side_logout} pc_tab`}>
-                <button
-                    className={`${styles.logout}`}
-                    onClick={() => {
-                        var result = confirm('ログアウトしますか？')
-                        if (result) { signOut(auth) }
-                    }}
-                >
-                    <LogoutIcon sx={{ width: 26, height: 26, color: 'var(--main-color)' }} />ログアウト
-                </button>
-            </div>
         </nav>
     )
 }

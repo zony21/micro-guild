@@ -6,6 +6,7 @@ body {
     --main-background: #faf9f8;
     --main-border: #e6e6e6;
     --txt-color: #5a3c37;
+    --logo-color: #965d57;
     --main-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     margin: 0;
     position: relative;
@@ -13,7 +14,7 @@ body {
     transition: 0.6s;
     background: #ffffff;
     color: var(--txt-color);
-    padding: 80px 0 0;
+    padding: 60px 0 0;
     background: var(--main-background);
 }
 .body_open {
@@ -64,7 +65,8 @@ h4,
 h5,
 nav,
 body,
-header {
+header,
+section {
     box-sizing: border-box;
 }
 .txt {
@@ -121,6 +123,7 @@ button {
 }
 .logo {
     font-size: 20px;
+    line-height: 20px;
     letter-spacing: 0.1em;
     font-family: "Noto Sans JP", sans-serif;
     font-weight: 600;
@@ -129,10 +132,25 @@ section {
     margin: 0 0 70px;
 }
 /*****************************************
+   com_main
+****************************************/
+.com_main{
+    padding: 100px 0 150px;
+    max-width: 1350px;
+    width: 92%;
+    margin: 0 auto;
+}
+/*****************************************
    h1
 ****************************************/
 h1 {
     font-size: 25px;
+}
+.under_h1{
+    font-size: 40px;
+    @media only screen and (max-width: 600px) {
+        font-size: 30px;
+    }
 }
 /*****************************************
    h2
@@ -144,13 +162,17 @@ h2 {
 /*****************************************
    h2.com
 ****************************************/
-h2.com_h2 {
+.com_h2 {
     font-weight: 600;
     margin: 0 0 50px;
 }
 /*****************************************
    h3.com_h3
 ****************************************/
+.com_h3{
+    margin: 0 0 30px;
+    font-weight: 500;
+}
 h3 {
     margin: 0 0 30px;
     font-size: 18px;
@@ -162,6 +184,7 @@ h3 {
 .bt {
     max-width: 300px;
     transition: 0.2s;
+    border-radius: 5px;
     .bt_link {
         display: block;
         font-size: 16px;

@@ -1,15 +1,16 @@
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextareaAutosize, TextField, Stack, FormControl, InputLabel, Select, MenuItem, Box, DialogContentText } from '@mui/material'
-import { addDoc, collection, doc, getDocs, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
+import { Button, Dialog, DialogContent, DialogTitle, TextField, Stack, FormControl, InputLabel, Select, MenuItem, Box, DialogContentText } from '@mui/material'
+import { addDoc, collection, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
-import { auth, db } from '../../firebase'
+import { db } from '../../firebase'
 import AddIcon from '@mui/icons-material/Add'
 import styles from "../../styles/Quest.module.scss"
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import AdapterDateFns from '@date-io/date-fns'
 import jaLocale from "date-fns/locale/ja"
 import dayjs from 'dayjs'
+import moment from 'moment'
 
 const QuestInput: React.FC = () => {
     const user = useSelector(selectUser)
@@ -24,11 +25,11 @@ const QuestInput: React.FC = () => {
     const [salarymin, setSalarymin] = useState("")
     const [salarymax, setSalarymax] = useState("")
     const [workingstatus, setWorkingstatus] = useState("")
-    var date = new Date()
-    var limitdays = dayjs(date).add(5, 'M').format("YYYY-MM-DD")
-    var mindays = dayjs(date).format("YYYY-MM-DD")
-    const [rlimit, setRlimit] = useState<null | string>(
-        limitdays
+    var limitdays = moment.utc().add(5, 'M')
+    var limitdaysvalue = new Date(moment.utc().add(5, 'M').format())
+    var mindays = moment()
+    const [rlimit, setRlimit] = useState<null | any>(
+        limitdaysvalue
     )
     const [recruit, setRecruit] = useState("")
     const [remail, setRemail] = useState("")
@@ -101,7 +102,7 @@ const QuestInput: React.FC = () => {
         setSalarymin("")
         setSalarymax("")
         setWorkingstatus("")
-        setRlimit(limitdays)
+        setRlimit(limitdaysvalue)
         setRemail(user.email)
         setRemailtxt("")
     }

@@ -267,7 +267,7 @@ const Auth: React.FC = () => {
                 </span>
               </Grid>
             </Grid>
-            <Button
+            {/* <Button
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -275,7 +275,7 @@ const Auth: React.FC = () => {
               startIcon={<GoogleIcon />}
             >
               Googleで続ける
-            </Button>
+            </Button> */}
           </Box>
         </Box>
         {/* アカウント登録ポップアップ */}

@@ -36,6 +36,9 @@
     padding: 30px 0;
     border-top: 1px solid var(--main-border);
     border-bottom: 1px solid var(--main-border);
+    @media only screen and (max-width: 667px) {
+        font-size: 18px;
+    }
 }
 /*****************************************
 Job
@@ -45,12 +48,19 @@ Job
     .job_detail {
         display: flex;
         align-items: flex-start;
+        justify-content: space-between;
         padding: 50px 0 100px;
         max-width: 1360px;
         margin: 0 auto;
+        @media only screen and (max-width: 800px) {
+            display: block;
+        }
         .job_detail_main {
-            width: 80%;
-            max-width: calc(100% - 300px);
+            width: calc(100% - 300px);
+            @media only screen and (max-width: 800px) {
+                max-width: 100%;
+                width: 100%;
+            }
             .job_detail_panel {
                 background: #ffffff;
                 padding: 40px 4%;
@@ -60,6 +70,7 @@ Job
                 応募用固定ボタン
                 ****************************************/
                 section.job_detail_bt {
+                    transition: 0.3s;
                     position: fixed;
                     bottom: 0;
                     left: 0;
@@ -67,6 +78,9 @@ Job
                     padding: 20px;
                     background: rgba(0, 0, 0, 0.3);
                     margin: 0;
+                    pointer-events: none;
+                    opacity: 0;
+                    z-index: 1;
                     .jobs_bt_wrap {
                         .url_bt {
                             background: var(--main-color);
@@ -91,6 +105,10 @@ Job
                         margin: 0 auto;
                     }
                 }
+                .job_detail_bt_on {
+                    opacity: 1 !important;
+                    pointer-events: auto !important;
+                }
                 /*****************************************
                 タイトル
                 ****************************************/
@@ -107,6 +125,9 @@ Job
                         margin: 0 0 30px;
                         font-size: 26px;
                         line-height: 180%;
+                        @media only screen and (max-width: 667px) {
+                            font-size: 20px;
+                        }
                     }
                     .tl_company {
                         margin: 0 0 20px;
@@ -118,6 +139,14 @@ Job
                     .job_detail_summary {
                         display: flex;
                         gap: 20px;
+                        @media only screen and (max-width: 667px) {
+                            display: block;
+                            .icon_txt {
+                                &:nth-child(n + 2) {
+                                    margin: 10px 0 0;
+                                }
+                            }
+                        }
                     }
                 }
                 /*****************************************
@@ -133,12 +162,31 @@ Job
                         display: flex;
                         gap: 30px;
                         flex-wrap: wrap;
+                        @media only screen and (max-width: 667px) {
+                            display: block;
+                        }
                         .job_detail_info_ul_li {
                             width: calc(50% - 15px);
+                            .job_detail_postcode {
+                                margin: 0 10px 0 0;
+                                @media only screen and (max-width: 667px) {
+                                    display: block;
+                                    margin: 0;
+                                }
+                            }
+                            @media only screen and (max-width: 667px) {
+                                width: 100%;
+                                &:nth-child(n + 2) {
+                                    margin: 30px 0 0;
+                                }
+                            }
                             .job_detail_h3 {
                                 padding: 10px 0;
                                 border-top: 1px solid var(--main-border);
                                 border-bottom: 1px solid var(--main-border);
+                                @media only screen and (max-width: 667px) {
+                                    font-size: 16px;
+                                }
                             }
                         }
                     }
@@ -155,6 +203,9 @@ Job
                         .txt {
                             font-weight: 500;
                             font-size: 24px;
+                            @media only screen and (max-width: 667px) {
+                                font-size: 18px;
+                            }
                         }
                     }
                     .job_detail_company_adress_box {
@@ -162,11 +213,18 @@ Job
                         display: flex;
                         gap: 10px;
                         align-items: center;
+                        @media only screen and (max-width: 667px) {
+                            display: block;
+                        }
                         .job_detail_company_adress_code {
                             font-size: 16px;
                         }
                         .job_detail_company_adress {
                             font-size: 18px;
+                            @media only screen and (max-width: 667px) {
+                                font-size: 16px;
+                                margin: 10px 0 0;
+                            }
                         }
                     }
                     .hpurl_bt {
@@ -204,8 +262,98 @@ Job
         }
 
         .job_detail_slider {
-            max-width: 300px;
-            width: 20%;
+            width: 250px;
+            position: sticky;
+            top: 90px;
+            @media only screen and (max-width: 800px) {
+                width: 100%;
+            }
+            .job_detail_slider_box {
+                .job_detail_slider_tl {
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                &:nth-child(n + 2) {
+                    margin: 50px 0 0;
+                }
+            }
+            .job_detail_slider_tags_box {
+                .job_detail_slider_tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    .job_detail_slider_tag {
+                        a {
+                            padding: 5px 15px;
+                            display: block;
+                            border-radius: 300px;
+                            background: var(--main-color);
+                            color: #ffffff;
+                            font-size: 13px;
+                            border: 2px solid var(--main-color);
+                            @media only screen and (min-width: 1025px) {
+                                &:hover {
+                                    background: var(--main-background);
+                                    color: var(--main-color);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .job_detail_slider_otherpost_box {
+                .job_detail_slider_otherposts {
+                    .job_detail_slider_otherpost {
+                        h2 {
+                            font-size: 16px;
+                        }
+                        &:nth-child(n + 2) {
+                            margin: 20px 0 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/*****************************************
+一覧
+****************************************/
+.jobs_main {
+    max-width: 1350px;
+    width: 92%;
+    margin: 0 auto;
+    padding: 20px 0 150px;
+    min-height: calc(100vh - 283px);
+    .jobs_Searchform_box {
+        margin: 0 0 70px;
+        padding: 20px 0 0;
+    }
+}
+.jobs_all_main {
+    padding: 100px 0 150px;
+}
+.search_word_box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0 0 50px;
+    .search_word_tl {
+    }
+    .search_words {
+        display: flex;
+        gap: 10px;
+        .search_word {
+            font-size: 14px;
+            line-height: 14px;
+            padding: 10px;
+            box-shadow: var(--main-shadow);
+            border-radius: 5px;
+            background: var(--main-color);
+            color: #ffffff;
+            &:empty {
+                display: none;
+            }
         }
     }
 }

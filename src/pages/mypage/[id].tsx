@@ -8,6 +8,8 @@ import Mypage from '../../components/Mypage'
 import { login, logout, selectUser } from '../../features/userSlice'
 import Layout from "../../components/Layout";
 import { auth, db } from '../../firebase'
+import styles from "../../styles/Auth.module.scss"
+import Head from 'next/head';
 
 const Mypages = () => {
   const user = useSelector(selectUser)
@@ -56,10 +58,18 @@ const Mypages = () => {
       unSub()
     }
   }, [dispatch])
+  const metatitle = `Micro Guild | ${user.displayName} Myページ`
   return (
     <Layout>
+      <Head>
+        <title>{metatitle}</title>
+      </Head>
       {!loading ?
-        user.uid ? (<Mypage />) : (<Auth />)
+        user.uid ? (<Mypage />) : (
+          <div className={`${styles.auth_wrap}`}>
+            <Auth />
+          </div>
+        )
         :
         (
           <div className="loader_wrap">
