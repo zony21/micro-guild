@@ -195,7 +195,7 @@ const Search = ({ postsdata }) => {
               .filter((unitset) => units.some(value2 => value2 === unitset.salarytype))
               .filter((employment) => employments.some(value3 => value3 === employment.workingstatus))
               .filter((postsea) => postsea.title.match(`${s}`) || postsea.text.match(`${s}`) || postsea.jobname.match(`${s}`))
-              .map((post) => {
+              .map((post,index) => {
                 return (
                   <Post
                     key={post.id}
@@ -211,6 +211,7 @@ const Search = ({ postsdata }) => {
                     workingstatus={post.workingstatus}
                     userid={post.userid}
                     rlimit={post.rlimit}
+                    index={index}
                   />
                 )
               })

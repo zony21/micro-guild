@@ -4,13 +4,17 @@ import styles from "../styles/Post.module.scss"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { selectUser } from '../features/userSlice';
 import { useSelector } from 'react-redux';
-import { async } from '@firebase/util';
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import { useAmp } from 'next/amp'
+import { AdSense } from './Adsense';
+
+export const config = { amp: 'hybrid' }
 
 const Post = (props) => {
+    const isAmp = useAmp()
     const router = useRouter()
     const user = useSelector(selectUser)
     const [passlink, setPasslink] = useState(false)
@@ -18,6 +22,7 @@ const Post = (props) => {
     const [postcllset, setPostcllset] = useState(false)
     const [postid, setPostId] = useState(false)
     const [limit, setLimit] = useState(false)
+    const [adsen, setAdsen] = useState(false)
     const limitday = new Date(props.rlimit)
     const today = new Date()
     if (props.rlimit.seconds) {
@@ -55,6 +60,9 @@ const Post = (props) => {
         }
         if (props.userid != user.uid) {
             setPostId(true)
+        }
+        if ((props.index + 1) % 5 === 0) {
+            setAdsen(true)
         }
     }, [])
     return (
@@ -122,6 +130,12 @@ const Post = (props) => {
                     </div>
                 }
             </div>
+            {adsen ? <>
+                <div className={`${styles.posts_item} post_com`}>
+                    <AdSense />
+                    <p className={`${styles.posts_sponsor_tl}`}>スポンサー</p>
+                </div>
+            </> : ""}
         </>
     )
 }

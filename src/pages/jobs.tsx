@@ -64,7 +64,7 @@ const Jobs = ({ postsdata }) => {
       <main className={`${styles.jobs_main} ${styles.jobs_all_main}`}>
         <div className={postyle.pos_wrap}>
           {
-            postsdata.map((post) => {
+            postsdata.map((post,index) => {
               return (
                 <Post
                   key={post.id}
@@ -80,6 +80,7 @@ const Jobs = ({ postsdata }) => {
                   workingstatus={post.workingstatus}
                   userid={post.userid}
                   rlimit={post.rlimit}
+                  index={index}
                 />
               )
             })
