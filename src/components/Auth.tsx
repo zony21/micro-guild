@@ -263,7 +263,7 @@ const Auth: React.FC = () => {
                   className={styles.login_toggleMode}
                   onClick={() => handleClickOpen()}
                 >
-                  新規登録
+                  無料新規登録
                 </span>
               </Grid>
             </Grid>
