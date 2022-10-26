@@ -297,6 +297,9 @@ Job
                                     color: var(--main-color);
                                 }
                             }
+                            &:empty{
+                                display: none;
+                            }
                         }
                     }
                 }

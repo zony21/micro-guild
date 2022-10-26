@@ -36,6 +36,7 @@ const QuestInput: React.FC = () => {
     const [remailtxt, setRemailtxt] = useState("")
     const [postmax, setPostMax] = React.useState(false)
     const [open, setOpen] = React.useState(false)
+    const [toukou, setToukou] = React.useState(false)
     const handleChangedays = (newValue: null) => {
         setRlimit(newValue)
     }
@@ -52,6 +53,15 @@ const QuestInput: React.FC = () => {
         setAdd3(user.add3)
         setRemail(user.email)
     }, [])
+    useEffect(() => {
+        if (recruit) {
+            setToukou(true)
+        } else if (remail && remail.match(/.+@.+\..+/)) {
+            setToukou(true)
+        } else {
+            setToukou(false)
+        }
+    })
     useEffect(() => {
         const data = async () => {
             const max = collection(db, "users", user.uid, "myposts")
@@ -305,7 +315,7 @@ const QuestInput: React.FC = () => {
                                 autoComplete="current-password"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRemailtxt(e.target.value) }}
                             />
-                            <Button onClick={handleClose} fullWidth variant="contained" type='submit' disabled={!postmax || !title || !text || !recruit && !remail || !remail.match(/.+@.+\..+/)}>
+                            <Button onClick={handleClose} fullWidth variant="contained" type='submit' disabled={!postmax || !title || !text || !toukou}>
                                 {!postmax ?
                                     <>
                                         投稿上限です
