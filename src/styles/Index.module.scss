@@ -31,14 +31,11 @@
             height: 300px;
             margin: 0 auto;
         }
-        span {
+        svg {
             height: 100%;
             width: 100%;
             transform: translate(0, 105%);
             transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 0.5s;
-            img {
-                object-fit: contain;
-            }
         }
     }
     .index_searchform {
@@ -149,7 +146,7 @@
 }
 .index_mv_on {
     .img {
-        span {
+        svg {
             transform: translate(0, 0) !important;
         }
     }

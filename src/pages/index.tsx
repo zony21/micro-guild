@@ -9,6 +9,7 @@ import Post from '../components/Post'
 import Searchform from '../components/Searchform'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
+import MainVisual from "../../public/img/mv.svg"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let posts = []
@@ -66,7 +67,7 @@ const IndexPage = ({ postsdata }) => {
       </Head>
       <section className={`${styles.index_mv} ${pageopen ? styles.index_mv_on : ""}`}>
         <div className={styles.img}>
-          <Image src="/img/mv.svg" layout='fill' />
+          <MainVisual />
         </div>
         <div className={styles.index_searchform}>
           <div className={styles.index_mv_txt}>
