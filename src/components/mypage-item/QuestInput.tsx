@@ -51,7 +51,6 @@ const QuestInput: React.FC = () => {
         setAdd1(user.add1)
         setAdd2(user.add2)
         setAdd3(user.add3)
-        setRemail(user.email)
     }, [])
     useEffect(() => {
         if (recruit) {
@@ -300,6 +299,7 @@ const QuestInput: React.FC = () => {
                                 name="remail"
                                 autoComplete="remail"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRemail(e.target.value) }}
+                                helperText="応募フォームURLまたは応募用メールアドレスのどちらかを入力してください"
                             />
                             <TextField
                                 margin="normal"

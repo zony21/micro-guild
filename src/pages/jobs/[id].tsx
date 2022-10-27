@@ -69,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<{
             item,
             user,
             postid,
-            postsdata
+            postsdata,
         },
     }
 }

@@ -344,7 +344,7 @@ const Auth: React.FC = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) }}
             />
             <Box>
-              <Link href="privacy"><a>個人情報保護について</a></Link>
+              <Link href="/privacy"><a target="_blank">個人情報保護について</a></Link>
             </Box>
             <Box>
               <FormControlLabel
