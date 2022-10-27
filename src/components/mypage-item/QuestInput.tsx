@@ -50,6 +50,7 @@ const QuestInput: React.FC = () => {
         setPostcode(user.postcode)
         setAdd1(user.add1)
         setAdd2(user.add2)
+        setRemail(user.email)
         setAdd3(user.add3)
     }, [])
     useEffect(() => {
