@@ -280,7 +280,7 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                                                 ) : ""}
                                                 {item.remail ? (
                                                     <div className={`${styles.email_bt} bt`}>
-                                                        <button onClick={onEmailopen} className="bt_link">メールで応募する</button>
+                                                        <button onClick={onEmailopen} className="bt_link">フォームから応募する</button>
                                                     </div>
                                                 ) : ""}
                                             </div>
