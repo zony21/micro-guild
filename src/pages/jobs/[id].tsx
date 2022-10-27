@@ -12,8 +12,9 @@ import admin from 'firebase-admin'
 import moment from 'moment'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 import Report from '../../components/Report'
+import emailjs from '@emailjs/browser'
 import Link from 'next/link'
 import Post from '../../components/Post'
 
@@ -22,6 +23,7 @@ export const getServerSideProps: GetServerSideProps<{
     user: FirebaseFirestore.DocumentData,
     postid: FirebaseFirestore.DocumentData,
     postsdata: FirebaseFirestore.DocumentData
+    id
 }> = async (context) => {
     const { id } = context.query
     const postidRef = id
@@ -70,11 +72,12 @@ export const getServerSideProps: GetServerSideProps<{
             user,
             postid,
             postsdata,
+            id
         },
     }
 }
 
-const Jobs: React.FC = ({ item, user, postid, postsdata }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const [isHeightOver, setIsHeightOver] = useState(false)
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -199,6 +202,56 @@ const Jobs: React.FC = ({ item, user, postid, postsdata }: InferGetServerSidePro
             }
         }
     }
+    const sex = [
+        {
+            id: 'sex1',
+            txt: '指定しない',
+        }, {
+            id: 'sex2',
+            txt: '男性',
+        }, {
+            id: 'sex3',
+            txt: '女性',
+        }
+    ]
+    const [appcname, setAppcname] = useState("")
+    const [appcnamekana, setAppcnamekana] = useState("")
+    const [sextype, setSextype] = useState("指定しない")
+    const [appcmail, setAppcmail] = useState("")
+    const [appctel, setAppctel] = useState("")
+    const [appcmess, setAppcmess] = useState("")
+    const onsexChange = (e) => {
+        setSextype(e.target.value)
+    }
+    const onRecruitsubmit = () => {
+        const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+        const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID2
+        const emailjsUserid = process.env.NEXT_PUBLIC_EMAILJS_USER_ID
+        const templateParams = {
+            useremail: item.remail,
+            title: item.title,
+            linkid: id,
+            name: appcname,
+            namekana: appcnamekana,
+            gender: sextype,
+            email: appcmail,
+            tel: appctel,
+            message: appcmess
+        }
+        emailjs.send(emailjsServiceId, emailjsTemplateId, templateParams, emailjsUserid)
+            .then((result) => {
+                alert("応募が完了しました。")
+                setAppcname("")
+                setAppcnamekana("")
+                setSextype("指定しない")
+                setAppcmail("")
+                setAppctel("")
+                setAppcmess("")
+                onEmailclose()
+            }, (error) => {
+                alert(`送信できませんでした：${error.text}`)
+            })
+    }
     return (
         <>
             <Head>
@@ -226,14 +279,9 @@ const Jobs: React.FC = ({ item, user, postid, postsdata }: InferGetServerSidePro
                                                     <div className={`${styles.url_bt} bt`}><a href={item.recruit} className="bt_link" target="_blank" rel="noopener">掲載元で応募する</a></div>
                                                 ) : ""}
                                                 {item.remail ? (
-                                                    item.remailtxt ? (
-                                                        <div className={`${styles.email_bt} bt`}>
-                                                            <button onClick={onEmailopen} className="bt_link">メールで応募する</button>
-                                                        </div>
-                                                    ) :
-                                                        (<div className={`${styles.email_bt} bt`}>
-                                                            <a href={`mailto:${item.remail}`} className="bt_link">メールで応募する</a>
-                                                        </div>)
+                                                    <div className={`${styles.email_bt} bt`}>
+                                                        <button onClick={onEmailopen} className="bt_link">メールで応募する</button>
+                                                    </div>
                                                 ) : ""}
                                             </div>
                                         </>
@@ -388,17 +436,93 @@ const Jobs: React.FC = ({ item, user, postid, postsdata }: InferGetServerSidePro
                 </div>
             </Layout >
             <Dialog open={open} onClose={onEmailclose} fullWidth>
-                <DialogTitle><h2 className={``}>注意事項</h2></DialogTitle>
+                <DialogTitle><h2 className={``}>応募フォーム</h2></DialogTitle>
                 <DialogContent>
-                    <DialogContentText className='txt'>
-                        {item.remailtxt}
-                    </DialogContentText>
-                    <div className={`${styles.email_bt} bt ${styles.dialog_bt}`}>
-                        <a href={`mailto:${item.remail}`} className="bt_link">メールで応募する</a>
-                    </div>
+                    {item.remailtxt ? (
+                        <DialogContentText className='txt'>
+                            <h3>注意事項</h3>
+                            {item.remailtxt}
+                        </DialogContentText>
+                    ) : ""}
+                    <br />
+                    <TextField
+                        id="standard-basic"
+                        label="お名前"
+                        variant="outlined"
+                        fullWidth
+                        required
+                        value={appcname}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppcname(e.target.value) }}
+                    />
+                    <TextField
+                        id="standard-basic"
+                        margin="normal"
+                        label="お名前(かな)"
+                        required
+                        variant="outlined"
+                        fullWidth
+                        value={appcnamekana}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppcnamekana(e.target.value) }}
+                    />
+                    <FormControl margin="normal">
+                        <FormLabel id="demo-radio-buttons-group-label">性別</FormLabel>
+                        <RadioGroup
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                        >
+                            {sex.map((item) => {
+                                return (
+                                    <FormControlLabel key={item.id} value={item.txt} control={<Radio />} label={item.txt} onChange={onsexChange} checked={sextype === item.txt} />
+                                )
+                            })}
+                        </RadioGroup>
+                    </FormControl>
+                    <TextField
+                        id="standard-basic"
+                        margin="normal"
+                        label="メールアドレス"
+                        variant="outlined"
+                        required
+                        fullWidth
+                        value={appcmail}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppcmail(e.target.value) }}
+                    />
+                    <TextField
+                        id="standard-basic"
+                        margin="normal"
+                        label="電話番号"
+                        type="number"
+                        required
+                        variant="outlined"
+                        fullWidth
+                        value={appctel}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppctel(e.target.value) }}
+                    />
+                    <TextField
+                        margin="normal"
+                        variant="outlined"
+                        value={appcmess}
+                        fullWidth
+                        multiline
+                        name="text"
+                        label="備考"
+                        type="text"
+                        id="text"
+                        rows={10}
+                        autoComplete="current-password"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppcmess(e.target.value) }}
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={onEmailclose}>キャンセル</Button>
+                    <Button
+                        onClick={onRecruitsubmit}
+                        variant="contained" sx={{
+                            bgcolor: '#db8c6c',
+                        }}
+                        disabled={!appcname || !appcnamekana || !appcmail || !appctel}
+                    >応募する</Button>
                 </DialogActions>
             </Dialog>
             <Report id={postid} title={item.title} userid={item.userid} reportopen={reportopen} setReportOpen={setReportOpen} />
