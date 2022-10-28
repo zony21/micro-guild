@@ -253,6 +253,8 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                     setAppcmail("")
                     setAppctel("")
                     setAppcmess("")
+                    setAppcage("")
+                    setAppcadd("")
                     onEmailclose()
                 }, (error) => {
                     alert(`送信できませんでした：${error.text}`)
