@@ -76,10 +76,28 @@ const IndexPage = ({ postsdata, news }) => {
             <div className={styles.index_mv_txt}>
               <span className={styles.index_mv_txt_main}>
                 <span className={styles.index_mv_txt_main_in}>
-                  <span className={styles.index_mv_txt_ani}>E</span><span className={styles.index_mv_txt_ani}>a</span><span className={styles.index_mv_txt_ani}>s</span><span className={styles.index_mv_txt_ani}>i</span><span className={styles.index_mv_txt_ani}>e</span><span className={styles.index_mv_txt_ani}>r</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>t</span><span className={styles.index_mv_txt_ani}>o</span>
+                  <span className={styles.index_mv_txt_ani}>J</span>
+                  <span className={styles.index_mv_txt_ani}>o</span>
+                  <span className={styles.index_mv_txt_ani}>b</span>
+                  <span className={styles.index_mv_txt_ani}>&nbsp;</span>
+                  <span className={styles.index_mv_txt_ani}>p</span>
+                  <span className={styles.index_mv_txt_ani}>o</span>
+                  <span className={styles.index_mv_txt_ani}>s</span>
+                  <span className={styles.index_mv_txt_ani}>t</span>
+                  <span className={styles.index_mv_txt_ani}>i</span>
+                  <span className={styles.index_mv_txt_ani}>n</span>
+                  <span className={styles.index_mv_txt_ani}>g</span>
                 </span>
                 <span className={styles.index_mv_txt_main_in}>
-                  <span className={styles.index_mv_txt_ani}>f</span><span className={styles.index_mv_txt_ani}>i</span><span className={styles.index_mv_txt_ani}>n</span><span className={styles.index_mv_txt_ani}>d</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>a</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>j</span><span className={styles.index_mv_txt_ani}>o</span><span className={styles.index_mv_txt_ani}>b</span>
+                  <span className={styles.index_mv_txt_ani}>m</span>
+                  <span className={styles.index_mv_txt_ani}>a</span>
+                  <span className={styles.index_mv_txt_ani}>d</span>
+                  <span className={styles.index_mv_txt_ani}>e</span>
+                  <span className={styles.index_mv_txt_ani}>&nbsp;</span>
+                  <span className={styles.index_mv_txt_ani}>e</span>
+                  <span className={styles.index_mv_txt_ani}>a</span>
+                  <span className={styles.index_mv_txt_ani}>s</span>
+                  <span className={styles.index_mv_txt_ani}>y</span>
                 </span>
               </span>
               <span className={styles.index_mv_txt_sub}>求人をもっと手軽に</span>
