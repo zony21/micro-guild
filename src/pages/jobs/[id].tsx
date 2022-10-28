@@ -445,7 +445,7 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                 </div>
             </Layout >
             <Dialog open={open} onClose={onEmailclose} fullWidth>
-                <DialogTitle><h2 className={``}>応募フォーム</h2></DialogTitle>
+                <DialogTitle>応募フォーム</DialogTitle>
                 <DialogContent>
                     {item.remailtxt ? (
                         <DialogContentText className='txt'>
