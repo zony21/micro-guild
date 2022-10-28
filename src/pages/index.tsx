@@ -106,7 +106,7 @@ const IndexPage = ({ postsdata, news }) => {
               <Searchform />
             </div>
           </div>
-          <div className={`${styles.index_news_box}`}>
+          {/* <div className={`${styles.index_news_box}`}>
             <Swiper
               direction={"vertical"}
               loop={true}
@@ -137,7 +137,7 @@ const IndexPage = ({ postsdata, news }) => {
                 })
               }
             </Swiper>
-          </div>
+          </div> */}
         </div>
       </section>
       <main className={styles.index_main}>
