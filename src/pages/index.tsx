@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/Layout'
@@ -7,11 +6,14 @@ import { GetServerSideProps } from 'next'
 import styles from '../styles/Index.module.scss'
 import Post from '../components/Post'
 import Searchform from '../components/Searchform'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import MainVisual from "../../public/img/mv.svg"
+import { client } from "../lib/client"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Pagination, Autoplay } from "swiper"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const data = await client.get({ endpoint: "news" });
   let posts = []
   try {
     // await the promise
@@ -47,12 +49,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const postsdata = await JSON.parse(JSON.stringify(posts))
   return {
     props: {
-      postsdata
+      postsdata,
+      news: data.contents,
     }
   }
 }
-
-const IndexPage = ({ postsdata }) => {
+const IndexPage = ({ postsdata, news }) => {
   const [pageopen, setPageopen] = useState(false)
   const timer = useRef<number>();
   useEffect(() => {
@@ -66,23 +68,57 @@ const IndexPage = ({ postsdata }) => {
         <title>求人SNS | Micro Guild</title>
       </Head>
       <section className={`${styles.index_mv} ${pageopen ? styles.index_mv_on : ""}`}>
-        <div className={styles.img}>
-          <MainVisual />
-        </div>
-        <div className={styles.index_searchform}>
-          <div className={styles.index_mv_txt}>
-            <span className={styles.index_mv_txt_main}>
-              <span className={styles.index_mv_txt_main_in}>
-                <span className={styles.index_mv_txt_ani}>E</span><span className={styles.index_mv_txt_ani}>a</span><span className={styles.index_mv_txt_ani}>s</span><span className={styles.index_mv_txt_ani}>i</span><span className={styles.index_mv_txt_ani}>e</span><span className={styles.index_mv_txt_ani}>r</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>t</span><span className={styles.index_mv_txt_ani}>o</span>
-              </span>
-              <span className={styles.index_mv_txt_main_in}>
-                <span className={styles.index_mv_txt_ani}>f</span><span className={styles.index_mv_txt_ani}>i</span><span className={styles.index_mv_txt_ani}>n</span><span className={styles.index_mv_txt_ani}>d</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>a</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>j</span><span className={styles.index_mv_txt_ani}>o</span><span className={styles.index_mv_txt_ani}>b</span>
-              </span>
-            </span>
-            <span className={styles.index_mv_txt_sub}>求人をもっと手軽に</span>
+        <div className={styles.index_mv_in}>
+          <div className={styles.img}>
+            <MainVisual />
           </div>
-          <div className={styles.index_searchform_box}>
-            <Searchform />
+          <div className={styles.index_searchform}>
+            <div className={styles.index_mv_txt}>
+              <span className={styles.index_mv_txt_main}>
+                <span className={styles.index_mv_txt_main_in}>
+                  <span className={styles.index_mv_txt_ani}>E</span><span className={styles.index_mv_txt_ani}>a</span><span className={styles.index_mv_txt_ani}>s</span><span className={styles.index_mv_txt_ani}>i</span><span className={styles.index_mv_txt_ani}>e</span><span className={styles.index_mv_txt_ani}>r</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>t</span><span className={styles.index_mv_txt_ani}>o</span>
+                </span>
+                <span className={styles.index_mv_txt_main_in}>
+                  <span className={styles.index_mv_txt_ani}>f</span><span className={styles.index_mv_txt_ani}>i</span><span className={styles.index_mv_txt_ani}>n</span><span className={styles.index_mv_txt_ani}>d</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>a</span><span className={styles.index_mv_txt_ani}>&nbsp;</span><span className={styles.index_mv_txt_ani}>j</span><span className={styles.index_mv_txt_ani}>o</span><span className={styles.index_mv_txt_ani}>b</span>
+                </span>
+              </span>
+              <span className={styles.index_mv_txt_sub}>求人をもっと手軽に</span>
+            </div>
+            <div className={styles.index_searchform_box}>
+              <Searchform />
+            </div>
+          </div>
+          <div className={`${styles.index_news_box}`}>
+            <Swiper
+              direction={"vertical"}
+              loop={true}
+              pagination={{
+                clickable: false,
+              }}
+              autoplay={{
+                delay: 7000,
+                disableOnInteraction: false,
+              }}
+              modules={[Autoplay, Pagination]}
+              className="mySwiper"
+            >
+              {
+                news.map((news, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <Link href={`/news/${news.id}`}>
+                        <a className={`${styles.index_news_atag}`}>
+                          <div className={`${styles.index_news_in}`}>
+                            <div className={`${styles.index_news_data}`}>{news.publishedAt.slice(0, -14)}</div>
+                            <div className={`${styles.index_news_tl}`}>{news.title}</div>
+                          </div>
+                        </a>
+                      </Link>
+                    </SwiperSlide>
+                  )
+                })
+              }
+            </Swiper>
           </div>
         </div>
       </section>

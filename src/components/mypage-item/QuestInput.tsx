@@ -286,7 +286,7 @@ const QuestInput: React.FC = () => {
                                 fullWidth
                                 value={recruit}
                                 id="recruit"
-                                label="応募フォームURL"
+                                label="応募先URL"
                                 name="recruit"
                                 autoComplete="recruit"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRecruit(e.target.value) }}
@@ -296,11 +296,11 @@ const QuestInput: React.FC = () => {
                                 fullWidth
                                 id="remail"
                                 value={remail}
-                                label="応募用メールアドレス"
+                                label="応募フォーム送り先メールアドレス"
                                 name="remail"
                                 autoComplete="remail"
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setRemail(e.target.value) }}
-                                helperText="応募フォームURLまたは応募用メールアドレスのどちらかを入力してください"
+                                helperText="応募先URLまたは応募用メールアドレスのどちらか1つ以上を入力してください"
                             />
                             <TextField
                                 margin="normal"
@@ -309,7 +309,7 @@ const QuestInput: React.FC = () => {
                                 value={remailtxt}
                                 multiline
                                 name="remailtxt"
-                                label="応募メールアドレス注意文"
+                                label="応募フォーム用注意文"
                                 type="remailtxt"
                                 id="remailtxt"
                                 rows={10}

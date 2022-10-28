@@ -22,6 +22,7 @@
     "emailjs-com": "^3.2.0",
     "firebase": "^9.9.3",
     "firebase-admin": "^11.0.1",
+    "microcms-js-sdk": "^2.3.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37",
     "next": "latest",
@@ -38,7 +39,8 @@
     "redux-localstorage": "^0.4.1",
     "redux-localstorage-filter": "^0.1.1",
     "redux-localstorage-simple": "^2.5.1",
-    "sass": "^1.54.5"
+    "sass": "^1.54.5",
+    "swiper": "^8.4.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.0.0",

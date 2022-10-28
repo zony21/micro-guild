@@ -220,6 +220,8 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
     const [appcmail, setAppcmail] = useState("")
     const [appctel, setAppctel] = useState("")
     const [appcmess, setAppcmess] = useState("")
+    const [appcage, setAppcage] = useState("")
+    const [appcadd, setAppcadd] = useState("")
     const onsexChange = (e) => {
         setSextype(e.target.value)
     }
@@ -236,21 +238,26 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
             gender: sextype,
             email: appcmail,
             tel: appctel,
-            message: appcmess
+            message: appcmess,
+            add: appcadd,
+            age: appcage
         }
-        emailjs.send(emailjsServiceId, emailjsTemplateId, templateParams, emailjsUserid)
-            .then((result) => {
-                alert("応募が完了しました。")
-                setAppcname("")
-                setAppcnamekana("")
-                setSextype("指定しない")
-                setAppcmail("")
-                setAppctel("")
-                setAppcmess("")
-                onEmailclose()
-            }, (error) => {
-                alert(`送信できませんでした：${error.text}`)
-            })
+        var result = confirm('応募しますか？')
+        if (result) {
+            emailjs.send(emailjsServiceId, emailjsTemplateId, templateParams, emailjsUserid)
+                .then((result) => {
+                    alert("応募が完了しました。")
+                    setAppcname("")
+                    setAppcnamekana("")
+                    setSextype("指定しない")
+                    setAppcmail("")
+                    setAppctel("")
+                    setAppcmess("")
+                    onEmailclose()
+                }, (error) => {
+                    alert(`送信できませんでした：${error.text}`)
+                })
+        }
     }
     return (
         <>
@@ -481,6 +488,17 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                     <TextField
                         id="standard-basic"
                         margin="normal"
+                        label="生年月日"
+                        variant="outlined"
+                        helperText="例)2000/01/01"
+                        required
+                        fullWidth
+                        value={appcage}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppcage(e.target.value) }}
+                    />
+                    <TextField
+                        id="standard-basic"
+                        margin="normal"
                         label="メールアドレス"
                         variant="outlined"
                         required
@@ -492,12 +510,22 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                         id="standard-basic"
                         margin="normal"
                         label="電話番号"
-                        type="number"
+                        helperText="09010102020"
                         required
                         variant="outlined"
                         fullWidth
                         value={appctel}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppctel(e.target.value) }}
+                    />
+                    <TextField
+                        id="standard-basic"
+                        margin="normal"
+                        label="住所"
+                        required
+                        variant="outlined"
+                        fullWidth
+                        value={appcadd}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAppcadd(e.target.value) }}
                     />
                     <TextField
                         margin="normal"
@@ -518,11 +546,11 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                     <Button onClick={onEmailclose}>キャンセル</Button>
                     <Button
                         onClick={onRecruitsubmit}
-                        variant="contained" sx={{
-                            bgcolor: '#db8c6c',
-                        }}
+                        variant="contained"
                         disabled={!appcname || !appcnamekana || !appcmail || !appctel}
-                    >応募する</Button>
+                    >
+                        応募する
+                    </Button>
                 </DialogActions>
             </Dialog>
             <Report id={postid} title={item.title} userid={item.userid} reportopen={reportopen} setReportOpen={setReportOpen} />
