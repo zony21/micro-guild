@@ -5,7 +5,6 @@ import { GetServerSideProps } from 'next'
 import postyle from "../styles/Post.module.scss"
 import styles from '../styles/Jobs.module.scss'
 import { db } from '../lib/db'
-import Searchform from '../components/Searchform'
 import Head from 'next/head'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

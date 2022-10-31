@@ -58,7 +58,7 @@ const Mypages = () => {
       unSub()
     }
   }, [dispatch])
-  const metatitle = `Micro Guild | ${user.displayName} Myページ`
+  const metatitle = `${user.displayName} Myページ | Micro Guild`
   return (
     <Layout>
       <Head>

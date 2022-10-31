@@ -12,7 +12,7 @@ import admin from 'firebase-admin'
 import moment from 'moment'
 import Avatar from '@mui/material/Avatar'
 import { useEffect, useState } from 'react'
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 import Report from '../../components/Report'
 import emailjs from '@emailjs/browser'
 import Link from 'next/link'
@@ -113,7 +113,7 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
     const handleClickOpen = () => {
         setReportOpen(true);
     }
-    const metatitle = `Micro Guild | ${item.title}の求人情報`
+    const metatitle = `${item.title}の求人情報 | Micro Guild`
     useEffect(() => {
         if (limitday <= today) {
             setLimit(true)
@@ -263,13 +263,13 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
     }
     return (
         <>
-            <Head>
-                <title>{metatitle}</title>
-                <script type="application/ld+json">
-                    {JSON.stringify(googleforjobs)}
-                </script>
-            </Head>
             <Layout>
+                <Head>
+                    <title>{metatitle}</title>
+                    <script type="application/ld+json">
+                        {JSON.stringify(googleforjobs)}
+                    </script>
+                </Head>
                 <div className={styles.job_wrap}>
                     <article className={styles.job_detail}>
                         <div className={styles.job_detail_main}>
@@ -300,7 +300,7 @@ const Jobs: React.FC = ({ item, user, postid, postsdata, id }: InferGetServerSid
                                 <section className={styles.job_detail_tl}>
                                     <div className={`${styles.date_tags} ${styles.icon_txt}`}>
                                         <span className={styles.icon}><ScheduleIcon sx={{ width: 20, height: 20, color: "#db8c6c" }} /></span>
-                                        <span className={styles.txt}>{moment.unix(item.timestamp?._seconds).format('YYYY/MM/DD')}</span>
+                                        <time dateTime={moment.unix(item.timestamp?._seconds).format('YYYY-MM-DD')} className={styles.txt}>{moment.unix(item.timestamp?._seconds).format('YYYY/MM/DD')}</time>
                                     </div>
                                     <h1 className={`${styles.job_detail_tl_h1}`}>{item.title}</h1>
                                     <div className={`${styles.tl_company} ${styles.icon_txt}`}>
