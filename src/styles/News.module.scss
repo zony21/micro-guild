@@ -1,19 +1,21 @@
-.news_main{
+.news_main {
     max-width: 1200px;
-    .news_main_in{
-        background: #ffffff;
+    min-height: calc(100vh - 200px);
+    .news_main_in {
         padding: 80px 5em;
-        box-shadow: var(--main-shadow);
-        .news_detail{
+        @media only screen and (max-width: 600px) {
+            padding: 80px 6vw;
+        }
+        .news_detail {
             display: flex;
             align-items: center;
             gap: 10px;
-            .news_data{
+            .news_data {
                 font-size: 15px;
                 color: #8f8f8f;
                 letter-spacing: 0.05em;
             }
-            .news_tag{
+            .news_tag {
                 font-size: 14px;
                 padding: 5px 10px;
                 border: 1px solid var(--main-color);
@@ -21,11 +23,66 @@
                 border-radius: 300px;
             }
         }
-        .news_h1{
+        .news_h1 {
             margin: 31px 0 100px;
             font-size: 41px;
             font-weight: 400;
             letter-spacing: 0.03em;
+            @media only screen and (max-width: 600px) {
+                font-size: 30px;
+            }
+        }
+    }
+    .news_more {
+        margin: 50px auto 0;
+        max-width: 200px;
+        a {
+            gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--txt-color);
+            @media only screen and (min-width: 1025px) {
+                &:hover {
+                    background: var(--txt-color);
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+    // 一覧
+    .news_list_h1 {
+        span {
+            font-size: 20px;
+            margin: 0 0 0 20px;
+            font-weight: normal;
+        }
+    }
+    .news_lists {
+        .news_list {
+            &:last-child{
+                border-bottom: 1px solid var(--main-border);
+            }
+            a {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 30px 0;
+                .news_list_data{
+                    color: #8f8f8f;
+                    font-size: 15px;
+                    width: 80px;
+                }
+                .news_list_tl{
+                    color: var(--txt-color);
+                    font-size: 16px;
+                    width: calc(100% - 100px);
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
         }
     }
 }

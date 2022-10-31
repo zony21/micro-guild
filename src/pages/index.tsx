@@ -13,7 +13,10 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, Autoplay } from "swiper"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const data = await client.get({ endpoint: "news" });
+  const data = await client.get({
+    endpoint: 'news',
+    queries: { limit: 5 }
+  })
   let posts = []
   try {
     // await the promise

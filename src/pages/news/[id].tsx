@@ -3,6 +3,8 @@ import Layout from "../../components/Layout"
 import styles from '../../styles/News.module.scss'
 import { client } from "../../lib/client"
 import moment from 'moment'
+import Link from "next/link"
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 
 export default function NewsId({ news }) {
     const metatitle = `${news.title} | Micro Guild`
@@ -27,6 +29,7 @@ export default function NewsId({ news }) {
                             }}
                         />
                     </article>
+                    <div className={`bt ${styles.news_more}`}><Link href="/news"><a className='bt_link'><FormatListBulletedIcon />一覧へ</a></Link></div>
                 </main>
             </Layout>
         </>
