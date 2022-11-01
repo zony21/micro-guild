@@ -18,44 +18,6 @@ const areatype = {
   area7: { name: "九州・沖縄地方", areain: ["福岡県", "滋賀県", "長崎県", "熊本県", "大分県", "宮城県", "鹿児島県", "沖縄県"] },
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let posts = []
-  try {
-    const querySnapshot = await db.collection('posts').orderBy('timestamp', 'desc').get()
-    querySnapshot.forEach(function (doc) {
-      posts.push({
-        id: doc.id,
-        title: doc.data().title,
-        text: doc.data().text,
-        postcode: doc.data().postcode,
-        add1: doc.data().add1,
-        add2: doc.data().add2,
-        add3: doc.data().add3,
-        jobname: doc.data().jobname,
-        salarytype: doc.data().salarytype,
-        salarymin: doc.data().salarymin,
-        salarymax: doc.data().salarymax,
-        workingstatus: doc.data().workingstatus,
-        rlimit: doc.data().rlimit,
-        remail: doc.data().remail,
-        remailtxt: doc.data().remailtxt,
-        timestamp: doc.data().timestamp,
-        userid: doc.data().userid,
-        recruit: doc.data().recruit,
-        username: doc.data().username
-      })
-    })
-  } catch (error) {
-    console.log(`Error getting documents: ${error}`)
-  }
-  const postsdata = await JSON.parse(JSON.stringify(posts))
-  return {
-    props: {
-      postsdata
-    }
-  }
-}
-
 const Search = ({ postsdata }) => {
   const router = useRouter()
   const [jparealist, setJparealist] = useState([])
@@ -220,6 +182,44 @@ const Search = ({ postsdata }) => {
       </main>
     </Layout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let posts = []
+  try {
+    const querySnapshot = await db.collection('posts').orderBy('timestamp', 'desc').get()
+    querySnapshot.forEach(function (doc) {
+      posts.push({
+        id: doc.id,
+        title: doc.data().title,
+        text: doc.data().text,
+        postcode: doc.data().postcode,
+        add1: doc.data().add1,
+        add2: doc.data().add2,
+        add3: doc.data().add3,
+        jobname: doc.data().jobname,
+        salarytype: doc.data().salarytype,
+        salarymin: doc.data().salarymin,
+        salarymax: doc.data().salarymax,
+        workingstatus: doc.data().workingstatus,
+        rlimit: doc.data().rlimit,
+        remail: doc.data().remail,
+        remailtxt: doc.data().remailtxt,
+        timestamp: doc.data().timestamp,
+        userid: doc.data().userid,
+        recruit: doc.data().recruit,
+        username: doc.data().username
+      })
+    })
+  } catch (error) {
+    console.log(`Error getting documents: ${error}`)
+  }
+  const postsdata = await JSON.parse(JSON.stringify(posts))
+  return {
+    props: {
+      postsdata
+    }
+  }
 }
 
 export default Search

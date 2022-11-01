@@ -12,51 +12,6 @@ import { client } from "../lib/client"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, Autoplay } from "swiper"
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const data = await client.get({
-    endpoint: 'news',
-    queries: { limit: 5 }
-  })
-  let posts = []
-  try {
-    // await the promise
-    const querySnapshot = await db.collection('posts').orderBy('timestamp', 'desc').limit(10).get();
-
-    // "then" part after the await
-    querySnapshot.forEach(function (doc) {
-      posts.push({
-        id: doc.id,
-        title: doc.data().title,
-        text: doc.data().text,
-        postcode: doc.data().postcode,
-        add1: doc.data().add1,
-        add2: doc.data().add2,
-        add3: doc.data().add3,
-        jobname: doc.data().jobname,
-        salarytype: doc.data().salarytype,
-        salarymin: doc.data().salarymin,
-        salarymax: doc.data().salarymax,
-        workingstatus: doc.data().workingstatus,
-        rlimit: doc.data().rlimit,
-        remail: doc.data().remail,
-        remailtxt: doc.data().remailtxt,
-        timestamp: doc.data().timestamp,
-        userid: doc.data().userid,
-        recruit: doc.data().recruit,
-        username: doc.data().username
-      })
-    })
-  } catch (error) {
-    alert(`Error getting documents: ${error}`)
-  }
-  const postsdata = await JSON.parse(JSON.stringify(posts))
-  return {
-    props: {
-      postsdata,
-      news: data.contents,
-    }
-  }
-}
 const IndexPage = ({ postsdata, news }) => {
   const [pageopen, setPageopen] = useState(false)
   const timer = useRef<number>();
@@ -216,6 +171,52 @@ const IndexPage = ({ postsdata, news }) => {
       </main>
     </Layout>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const data = await client.get({
+    endpoint: 'news',
+    queries: { limit: 5 }
+  })
+  let posts = []
+  try {
+    // await the promise
+    const querySnapshot = await db.collection('posts').orderBy('timestamp', 'desc').limit(10).get();
+
+    // "then" part after the await
+    querySnapshot.forEach(function (doc) {
+      posts.push({
+        id: doc.id,
+        title: doc.data().title,
+        text: doc.data().text,
+        postcode: doc.data().postcode,
+        add1: doc.data().add1,
+        add2: doc.data().add2,
+        add3: doc.data().add3,
+        jobname: doc.data().jobname,
+        salarytype: doc.data().salarytype,
+        salarymin: doc.data().salarymin,
+        salarymax: doc.data().salarymax,
+        workingstatus: doc.data().workingstatus,
+        rlimit: doc.data().rlimit,
+        remail: doc.data().remail,
+        remailtxt: doc.data().remailtxt,
+        timestamp: doc.data().timestamp,
+        userid: doc.data().userid,
+        recruit: doc.data().recruit,
+        username: doc.data().username
+      })
+    })
+  } catch (error) {
+    alert(`Error getting documents: ${error}`)
+  }
+  const postsdata = await JSON.parse(JSON.stringify(posts))
+  return {
+    props: {
+      postsdata,
+      news: data.contents,
+    }
+  }
 }
 
 export default IndexPage
