@@ -37,3 +37,7 @@ next-env.d.ts
 
 # firebase
 firebase/**/*.json
+
+# for next-sitemap
+/public/robots.txt
+/public/sitemap*.xml
