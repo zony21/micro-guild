@@ -28,7 +28,7 @@ const IndexPage = ({ postsdata, news, topics }) => {
   return (
     <Layout>
       <Head>
-        <title>求人SNS | Micro Guild</title>
+        <title>求人募集者のための求人サイト | Micro Guild</title>
       </Head>
       <section className={`${styles.index_mv} ${pageopen ? styles.index_mv_on : ""}`}>
         <div className={styles.index_mv_in}>
