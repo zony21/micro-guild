@@ -17,12 +17,11 @@ const Layout = ({ children }) => {
                 <meta name="msapplication-TileColor" content="#faf9f8" />
                 <meta name="theme-color" content="#faf9f8"></meta>
                 <meta name="google-site-verification" content="d4ZbSEaezTdFZDMlHqEKKC12iSwTY6-pey0Xq0fGMbo" />
-                <Script
+                <script
                     async
                     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880001846776098"
-                    crossOrigin="anonymous"
-                >
-                </Script>
+                    crossOrigin="anonymous">
+                </script>
             </Head>
             <Header />
             {children}
