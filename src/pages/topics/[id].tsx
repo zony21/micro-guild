@@ -8,15 +8,20 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import Sidebar_topics from "../../components/Sidebar_topics"
 import { groupBy } from "../../lib/util"
 
-const TopicsId = ({ topics, cats, monthlyIndex }) => {
+const TopicsId = ({ topics, cats, monthlyIndex, id }) => {
     const metatitle = `${topics.title} | Micro Guild`
     const topicsdata = moment(topics.publishedAt).format('YYYY/MM/DD')
-    console.log(topics.content[0].fieldId)
     return (
         <>
             <Layout>
                 <Head>
                     <title>{metatitle}</title>
+                    <meta property="og:url" content={`https://www.micro-guild.com/topics/${id}`} />
+                    <meta property="og:type" content="article" />
+                    <meta property="og:title" content={metatitle} />
+                    <meta property="og:description" content={metatitle} />
+                    <meta property="og:site_name" content="Micro Guild" />
+                    <meta property="og:image" content={topics.mv.url} />
                 </Head>
                 <main className={`${styles.topics_main} com_main`}>
                     <div className={`${styles.topic_main_in}`}>
@@ -79,6 +84,7 @@ export const getStaticProps = async (context) => {
 
     return {
         props: {
+            id: id,
             topics: data,
             cats: catdata.contents,
             monthlyIndex: monthlyIndex
