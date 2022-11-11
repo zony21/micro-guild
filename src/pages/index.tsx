@@ -18,7 +18,6 @@ import moment from 'moment'
 
 const IndexPage = ({ postsdata, news, topics }) => {
   const [pageopen, setPageopen] = useState(false)
-  const topicsdata = moment(topics.publishedAt).format('YYYY/MM/DD')
   const timer = useRef<number>();
   useEffect(() => {
     timer.current = window.setTimeout(() => {
@@ -186,7 +185,7 @@ const IndexPage = ({ postsdata, news, topics }) => {
                 <Link href={`/topics/${topics.id}`}>
                   <a>
                     <div className={`${styles.index_topics_list_img} img`}><Image src={topics.mv.url} layout='fill' objectFit='cover' alt="Google Japan Blog" /></div>
-                    <div className={`${styles.index_topics_list_data}`}><QueryBuilderIcon /><span>{topicsdata}</span></div>
+                    <div className={`${styles.index_topics_list_data}`}><QueryBuilderIcon /><span>{moment(topics.publishedAt).format('YYYY/MM/DD')}</span></div>
                     <div className={`${styles.index_topics_list_tl}`}>{topics.title}</div>
                     <ul className={`${styles.index_topics_tags_list}`}>
                       {topics.category.map((tag, index) => {
