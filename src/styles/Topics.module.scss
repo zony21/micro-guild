@@ -40,19 +40,22 @@
                 margin: 0 0 50px;
             }
         }
-        @media only screen and (max-width: 600px) {
-            padding: 80px 6vw;
-        }
         .topics_article_box {
             padding: 60px 40px;
             background: #ffffff;
             border-radius: 10px;
             box-shadow: var(--main-shadow);
+            @media only screen and (max-width: 600px) {
+                padding: 50px 6vw;
+            }
             .topics_detail {
                 display: flex;
                 justify-content: space-between;
                 gap: 10px;
                 margin: 0 0 80px;
+                @media only screen and (max-width: 600px) {
+                    margin: 0 0 30px;
+                }
                 .topics_data {
                     font-size: 15px;
                     color: #8f8f8f;
@@ -306,7 +309,7 @@
         }
     }
     .topics_side_menu_allposts {
-        margin: 30px 0 0;
+        margin: 30px auto 0;
         .topics_side_menu_allposts_in {
             border: 2px solid var(--main-color);
             background: var(--main-color);
