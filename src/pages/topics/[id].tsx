@@ -56,7 +56,7 @@ const TopicsId = ({ topics, cats, monthlyIndex, id }) => {
                                     })}
                                 </div>
                             </article>
-                            <div className={`bt ${styles.topics_more}`}><Link href="/topics"><a className='bt_link'><FormatListBulletedIcon />一覧へ</a></Link></div>
+                            <div className={`bt ${styles.topics_more}`}><Link href="/topics/page/1"><a className='bt_link'><FormatListBulletedIcon />一覧へ</a></Link></div>
                         </div>
                         <div className={`${styles.topics_side_menu}`}>
                             <Sidebar_topics cats={cats} monthlyIndex={monthlyIndex} />

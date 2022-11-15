@@ -35,6 +35,11 @@ const Footer = () => {
                                 <a>このサイトについて</a>
                             </Link>
                         </li>
+                        {/* <li className={styles.sub_link}>
+                            <Link href="/howto">
+                                <a>求人掲載方法</a>
+                            </Link>
+                        </li> */}
                         <li className={styles.sub_link}>
                             <Link href="/privacy">
                                 <a>プライバシーポリシー</a>
