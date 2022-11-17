@@ -15,7 +15,6 @@ const PER_PAGE = 6
 
 function TopicsPageId({ topics, cats, monthlyIndex, totalCount, nowpage }) {
     const topicsdata = moment(topics.publishedAt).format('YYYY/MM/DD')
-    console.log(nowpage)
     return (
         <>
             <Layout>
