@@ -36,12 +36,12 @@ function TopicsPageId({ topics, cats, monthlyIndex, totalCount, nowpage }) {
                                         <Link href={`/topics/${topics.id}`}>
                                             <a>
                                                 <div className={`${styles.topics_list_img} img`}><Image src={topics.mv.url} layout='fill' objectFit='cover' alt="Google Japan Blog" /></div>
-                                                <div className={`${styles.topics_list_data}`}><QueryBuilderIcon /><span>{topicsdata}</span></div>
-                                                <div className={`${styles.topics_list_tl}`}>{topics.title}</div>
+                                                <div className={`${styles.topics_list_data}`}><QueryBuilderIcon /><span suppressHydrationWarning={true}>{topicsdata}</span></div>
+                                                <div className={`${styles.topics_list_tl}`} suppressHydrationWarning={true}>{topics.title}</div>
                                                 <ul className={`${styles.topics_tags_list}`}>
                                                     {topics.category.map((tag, index) => {
                                                         return (
-                                                            <li className={`${styles.topics_tag_list}`} key={index}>{tag.name}</li>
+                                                            <li className={`${styles.topics_tag_list}`} key={index} suppressHydrationWarning={true}>{tag.name}</li>
                                                         )
                                                     })}
                                                 </ul>
