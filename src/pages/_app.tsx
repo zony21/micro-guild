@@ -9,11 +9,7 @@ import { useEffect } from 'react'
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
-    TagManager.initialize({ gtmId: 'GTM-PQXSBWQ' })
-  }, [])
-
-  useEffect(() => {
-    document.body.classList?.remove('loading')
+    TagManager.initialize({ gtmId: process.env.NEXT_PUBLIC_TAGMANAGER })
   }, [])
   return (
     <>
