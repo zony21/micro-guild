@@ -11,9 +11,9 @@ import MainVisual from "../../public/img/mv.svg"
 import { client } from "../lib/client"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Pagination, Autoplay } from "swiper"
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Image from 'next/image'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder'
+import Image from 'next/image'
 import moment from 'moment'
 
 const IndexPage = ({ postsdata, news, topics }) => {
