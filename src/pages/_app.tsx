@@ -4,15 +4,9 @@ import '../styles/globals.scss'
 import '../styles/header.scss'
 import "../styles/swiper/style.css"
 import Head from 'next/head'
-import TagManager from 'react-gtm-module'
 import { useEffect } from 'react'
 
 export default function App({ Component, pageProps }) {
-
-  useEffect(() => {
-    TagManager.initialize({ gtmId: [process.env.NEXT_PUBLIC_TAGMANAGER] });
-  }, []);
-
   return (
     <>
       <Head>
