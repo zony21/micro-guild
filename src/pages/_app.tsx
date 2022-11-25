@@ -1,11 +1,20 @@
-import { Provider } from 'react-redux';
-import store from '../app/store';
+import { Provider } from 'react-redux'
+import store from '../app/store'
 import '../styles/globals.scss'
 import '../styles/header.scss'
 import "../styles/swiper/style.css"
-import Head from 'next/head';
+import Head from 'next/head'
+import TagManager from 'react-gtm-module'
+import { useEffect } from 'react'
 
 export default function App({ Component, pageProps }) {
+  useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-PQXSBWQ' })
+  }, [])
+
+  useEffect(() => {
+    document.body.classList?.remove('loading')
+  }, [])
   return (
     <>
       <Head>
@@ -18,16 +27,10 @@ export default function App({ Component, pageProps }) {
         <meta name="msapplication-TileColor" content="#faf9f8" />
         <meta name="theme-color" content="#faf9f8"></meta>
         <meta name="google-site-verification" content="d4ZbSEaezTdFZDMlHqEKKC12iSwTY6-pey0Xq0fGMbo" />
-        <script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3880001846776098"
-          crossOrigin="anonymous"
-          async
-        >
-        </script>
       </Head>
       <Provider store={store}>
         <Component {...pageProps} />
       </Provider>
     </>
-  );
+  )
 }
