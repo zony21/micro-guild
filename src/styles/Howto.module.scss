@@ -1,0 +1,313 @@
+.howto_main {
+    max-width: 100%;
+    width: 100%;
+    .howto_sec {
+        .howto_h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin: 0 0 60px;
+            letter-spacing: 0.08em;
+            @media only screen and (max-width: 900px) {
+                font-size: 24px;
+            }
+        }
+        .howto_sec_in {
+            max-width: 1350px;
+            width: 92%;
+            margin: 0 auto;
+        }
+    }
+    .howto_sec1 {
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        padding: 0 0 50px;
+        &::after {
+            position: absolute;
+            left: 0;
+            top: 30px;
+            width: 100vw;
+            height: 800px;
+            content: "";
+            background: #f2ded5;
+            z-index: -1;
+            @media only screen and (max-width: 900px) {
+                height: calc(100% - 20px);
+                top: auto;
+                bottom: 0;
+            }
+        }
+        .howto_sec1_slider_wrap {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            @media only screen and (max-width: 900px) {
+                display: block;
+            }
+            .howto_sec1_slider_boxs {
+                position: relative;
+                width: 615px;
+                @media only screen and (max-width: 1240px) {
+                    width: calc(100% - 550px);
+                }
+                @media only screen and (max-width: 1060px) {
+                    width: calc(100% - 470px);
+                }
+                @media only screen and (max-width: 900px) {
+                    width: 100%;
+                }
+                .howto_sec1_slider_box {
+                    width: 100%;
+                    transition: 0.3s;
+                    opacity: 0;
+                    pointer-events: none;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    h3 {
+                        font-size: 30px;
+                        font-weight: 600;
+                        @media only screen and (max-width: 900px) {
+                            font-size: 20px;
+                        }
+                        span {
+                            color: red;
+                            font-size: 50px;
+                            margin: 0 5px;
+                            @media only screen and (max-width: 900px) {
+                                font-size: 36px;
+                            }
+                        }
+                    }
+                    .howto_sec1_slider_box_txt_box {
+                        height: 220px;
+                        overflow: scroll;
+                        p {
+                            font-size: 15px;
+                            font-weight: 600;
+                            .howto_txt_tyu {
+                                font-size: 14px;
+                                color: red;
+                                font-weight: normal;
+                            }
+                        }
+                        .howto_signin_bt {
+                            width: 100%;
+                            max-width: 400px;
+                            margin: 30px auto 0 0;
+                            .bt_link {
+                                background: var(--complementary);
+                                border: 3px solid var(--complementary);
+                                border-radius: 600px;
+                                color: #ffffff;
+                                font-size: 18px;
+                                box-shadow: var(--main-shadow);
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 20px 35px;
+                                font-weight: 500;
+                                letter-spacing: 0.1em;
+                                @media only screen and (min-width: 1025px) {
+                                    &:hover {
+                                        background: #ffffff;
+                                        color: var(--complementary);
+                                    }
+                                }
+                            }
+                        }
+                        ul {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                            margin: 30px 0 0;
+                            li {
+                                width: calc(50% - 5px);
+                                font-size: 14px;
+                                font-weight: 600;
+                                padding: 0 0 0 20px;
+                                position: relative;
+                                span {
+                                    display: block;
+                                    font-size: 12px;
+                                    color: #717171;
+                                    font-weight: normal;
+                                }
+                                &::after {
+                                    border-radius: 50%;
+                                    content: "";
+                                    position: absolute;
+                                    left: 0;
+                                    top: 5px;
+                                    height: 10px;
+                                    width: 10px;
+                                    background: var(--main-color);
+                                }
+                            }
+                        }
+                    }
+                    .howto_sec1_slider_box_img {
+                        transform: translateX(-120px);
+                        padding: 94.3% 0 0;
+                        width: 150.3%;
+                        position: relative;
+                        @media only screen and (max-width: 900px) {
+                            width: 100%;
+                            transform: translateX(0px);
+                            padding: 63% 0 0;
+                        }
+                    }
+                }
+            }
+            .howto_sec1_slider_paginations {
+                width: 340px;
+                @media only screen and (max-width: 900px) {
+                    display: none;
+                }
+                .howto_sec1_slider_pagination {
+                    button {
+                        cursor: pointer;
+                        width: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+                        padding: 20px;
+                        color: var(--txt-color);
+                        border-radius: 10px;
+                        background: #ffffff;
+                        box-shadow: var(--main-shadow);
+                        .howto_sec1_slider_pagination_icon {
+                            width: 35px;
+                            height: 35px;
+                            svg {
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        .howto_sec1_slider_pagination_tl {
+                            width: calc(100% - 110px);
+                            font-size: 18px;
+                            font-weight: 600;
+                            letter-spacing: 0.07em;
+                            text-align: left;
+                        }
+                    }
+                    .howto_sec1_slider_arrow {
+                        color: var(--main-color);
+                        margin: 10px auto;
+                        width: 50px;
+                        height: 50px;
+                        svg {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+                .howto_sec1_pagination_active {
+                    button {
+                        cursor: auto !important;
+                        background: var(--main-color) !important;
+                        color: #ffffff !important;
+                    }
+                }
+            }
+        }
+    }
+    .howto_sec1_slider_arrows {
+        button {
+            position: absolute;
+            bottom: 80vw;
+            svg {
+                color: var(--txt-color);
+            }
+        }
+        .howto_sec1_slider_arrow_prev {
+            left: 10px;
+        }
+        .howto_sec1_slider_arrow_next {
+            right: 10px;
+        }
+        @media only screen and (min-width: 901px) {
+            display: none;
+        }
+    }
+    .howto_sec1_slider_arrows_down {
+        flex-direction: row-reverse;
+    }
+    .howto_sec2 {
+        .howto_sec2_comparison_lists {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            @media only screen and (max-width: 900px) {
+                gap: 20px;
+            }
+            @media only screen and (max-width: 500px) {
+                display: block;
+            }
+            .howto_sec2_comparison_list {
+                width: calc((100% - 100px) / 3);
+                padding: 40px;
+                background: #ffffff;
+                border-radius: 10px;
+                box-shadow: var(--main-shadow);
+                @media only screen and (max-width: 900px) {
+                    width: calc(50% - 10px);
+                    padding: 20px;
+                }
+                @media only screen and (max-width: 500px) {
+                    width: 100%;
+                    &:nth-child(n + 2) {
+                        margin: 20px 0 0;
+                    }
+                }
+                .howto_sec2_comparison_list_img {
+                    padding: 64.4% 0 0;
+                    position: relative;
+                    margin: 0 0 20px;
+                    @media only screen and (max-width: 500px) {
+                        padding: 46.5% 0 0;
+                    }
+                    span.howto_sec2_comparison_list_inyo {
+                        position: absolute;
+                        left: 0;
+                        bottom: -13px;
+                        font-size: 12px;
+                        width: 100%;
+                        text-align: center;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+                .howto_sec2_comparison_list_tl {
+                    font-weight: 600;
+                    text-align: center;
+                    margin: 0 0 20px;
+                    font-size: 18px;
+                }
+                .howto_sec2_comparison_list_txt {
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+
+.howto_sec1_slider_arrow_last {
+    display: none;
+}
+.howto_sec1_slider_active {
+    opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+    .howto_sec1_slider_box_txt_box {
+        margin: 0 0 50px;
+    }
+}
+.howto_sec1_slider_wrap {
+    position: relative;
+}

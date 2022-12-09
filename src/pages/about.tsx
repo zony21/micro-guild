@@ -36,7 +36,7 @@ const About = () => {
                                 <div className={`${styles.about_contents_txt} txt`}>
                                     Googleが提供するキーワードにマッチする求人情報を検索結果に表示するサービス「Google for jobs」に自動で登録することができます。
                                     <div className={`img ${styles.img}`}>
-                                        <Image src="/img/googleforjobs.png" layout='fill' objectFit='contain' alt="Google Japan Blog" />
+                                        <Image src="/img/about/googleforjobs.png" layout='fill' objectFit='contain' alt="Google Japan Blog" />
                                     </div>
                                     <div className={`${styles.quote}`}>
                                         引用:<a href="https://jobs.google.com/about/intl/ja_ALL/" target="_blank" rel="noopener">https://jobs.google.com/about/intl/ja_ALL/</a>より
